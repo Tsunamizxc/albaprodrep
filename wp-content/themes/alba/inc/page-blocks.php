@@ -330,6 +330,15 @@ add_action(
 				'display'    => 'block',
 				'sub_fields' => array(
 					array(
+						'key'           => 'fld_cat_from_cpt',
+						'label'         => 'Брать услуги из CPT (весь каталог)',
+						'name'          => 'from_cpt',
+						'type'          => 'true_false',
+						'ui'            => 1,
+						'default_value' => 0,
+						'instructions'  => 'Если включено — показываются все услуги и программы с фильтрами. Иначе — карточки ниже.',
+					),
+					array(
 						'key'          => 'fld_cat_items',
 						'label'        => 'Карточки',
 						'name'         => 'items',

@@ -76,8 +76,20 @@ $city = alba_get_current_city();
           </select>
           <button class="btn btn--blue" type="submit">Жду звонка <?php echo alba_arr(); // phpcs:ignore ?></button>
         </div>
-        <div class="form__ok">Заявка принята. Дежурный врач перезвонит с номера клиники.</div>
       </form>
+    </div>
+  </div>
+
+  <div class="thanks-modal" data-thanks-modal hidden>
+    <div class="thanks-modal__backdrop" data-thanks-close></div>
+    <div class="thanks-modal__box" role="dialog" aria-modal="true" aria-labelledby="thanks-title">
+      <button class="thanks-modal__close" type="button" data-thanks-close aria-label="Закрыть">×</button>
+      <div class="thanks-modal__icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" fill="#E8F1FF"/><path d="M14 24.5 21 31.5 34 16.5" stroke="#4F84FF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h2 id="thanks-title">Спасибо за заявку</h2>
+      <p>Дежурный врач перезвонит с номера клиники в ближайшие минуты. Можно закрыть окно и оставить ещё одну заявку при необходимости.</p>
+      <button class="btn btn--blue" type="button" data-thanks-close>Хорошо</button>
     </div>
   </div>
 <?php wp_footer(); ?>

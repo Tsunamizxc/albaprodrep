@@ -338,13 +338,116 @@
   };
 
   const forms = () => {
+    const thanks = doc.querySelector("[data-thanks-modal]");
+    const openThanks = () => {
+      if (!thanks) return;
+      thanks.hidden = false;
+      requestAnimationFrame(() => thanks.classList.add("is-open"));
+      lockScroll();
+    };
+    const closeThanks = () => {
+      if (!thanks || thanks.hidden) return;
+      thanks.classList.remove("is-open");
+      window.setTimeout(() => { thanks.hidden = true; }, 280);
+      unlockScroll();
+    };
+    if (thanks) {
+      thanks.querySelectorAll("[data-thanks-close]").forEach((b) => b.addEventListener("click", closeThanks));
+      doc.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && thanks.classList.contains("is-open")) closeThanks();
+      });
+    }
+
+    const resetForm = (form) => {
+      form.reset();
+      form.classList.remove("is-sent", "is-loading");
+      const wrap = form.closest(".form, .funnel__side, .page-funnel__box--form, .hero-lead-form, .calc");
+      if (wrap) wrap.classList.remove("is-sent");
+      form.querySelectorAll("[data-test-score-field], [data-test-brief-field]").forEach((el) => { el.value = ""; });
+      const btn = form.querySelector('button[type="submit"]');
+      if (btn) btn.disabled = false;
+    };
+
+    const sendLead = (form) => {
+      if (typeof ALBA === "undefined" || !ALBA.ajax) {
+        openThanks();
+        resetForm(form);
+        return Promise.resolve();
+      }
+      const phone = form.querySelector('[name="phone"]');
+      if (!phone || !String(phone.value || "").trim()) {
+        phone && phone.focus();
+        return Promise.reject(new Error("phone"));
+      }
+      const fd = new FormData();
+      fd.append("action", "alba_lead");
+      fd.append("nonce", ALBA.nonce || "");
+      fd.append("phone", phone.value);
+      const name = form.querySelector('[name="name"]');
+      const prog = form.querySelector('[name="program"]');
+      if (name) fd.append("name", name.value);
+      if (prog) fd.append("program", prog.value);
+      fd.append("page", location.href);
+      const score = form.querySelector("[data-test-score-field]");
+      const brief = form.querySelector("[data-test-brief-field]");
+      if (score && score.value) fd.append("test_score", score.value);
+      if (brief && brief.value) fd.append("test_brief", brief.value);
+      return fetch(ALBA.ajax, { method: "POST", body: fd, credentials: "same-origin" })
+        .then(() => {
+          const leadModal = form.closest("[data-modal]");
+          if (leadModal && leadModal.classList.contains("is-open")) {
+            leadModal.classList.remove("is-open");
+            unlockScroll();
+          }
+          openThanks();
+          resetForm(form);
+        })
+        .catch(() => {
+          openThanks();
+          resetForm(form);
+        });
+    };
+
     doc.addEventListener("submit", (e) => {
-      const form = e.target && e.target.closest && e.target.closest("form[data-form]");
-      if (!form || form.closest("[data-calc-form]") || form.closest("[data-exit-form]")) return;
+      const form = e.target && e.target.closest && e.target.closest("form[data-form], form[data-alba-lead]");
+      if (!form || form.closest("[data-exit-form]") || form.closest("[data-calc-form]")) return;
+      if (form.dataset.albaBusy === "1") {
+        e.preventDefault();
+        return;
+      }
       e.preventDefault();
-      const wrap = form.closest(".form") || form;
-      wrap.classList.add("is-sent");
+      form.dataset.albaBusy = "1";
+      const btn = form.querySelector('button[type="submit"]');
+      if (btn) btn.disabled = true;
+      form.classList.add("is-loading");
+      sendLead(form).finally(() => {
+        form.dataset.albaBusy = "0";
+      });
     });
+
+    // Expose for calc / other widgets.
+    window.albaLeadSuccess = (form) => {
+      openThanks();
+      if (form) resetForm(form);
+    };
+    window.albaSendLead = sendLead;
+
+    // Exit-intent form: same thanks + reset.
+    doc.addEventListener("submit", (e) => {
+      const form = e.target && e.target.closest && e.target.closest("form[data-exit-form]");
+      if (!form) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const phone = form.querySelector('[name="phone"]');
+      if (!phone || !phone.value) return;
+      sendLead(form).then(() => {
+        const thanksInline = form.querySelector(".exit-modal__thanks");
+        if (thanksInline) thanksInline.hidden = true;
+        form.classList.remove("is-sent");
+        const exit = form.closest("[data-exit-modal]");
+        if (exit) exit.classList.remove("is-open");
+      });
+    }, true);
   };
 
   const dirsNav = () => {
@@ -1109,20 +1212,22 @@
     if (formEl) {
       formEl.addEventListener("submit", (e) => {
         e.preventDefault();
+        e.stopPropagation();
         if (busy) return;
-        form.classList.add("is-sent");
-        if (summary) summary.hidden = true;
-        if (q) q.textContent = "Заявка отправлена";
-        if (back) back.hidden = true;
         busy = true;
-        window.setTimeout(() => {
+        const run = typeof window.albaSendLead === "function"
+          ? window.albaSendLead(formEl)
+          : Promise.resolve().then(() => {
+              if (typeof window.albaLeadSuccess === "function") window.albaLeadSuccess(formEl);
+            });
+        Promise.resolve(run).finally(() => {
           form.classList.remove("is-sent");
-          formEl.reset();
           picks.length = 0;
           i = 0;
           busy = false;
+          if (summary) summary.hidden = true;
           paint(1);
-        }, 3400);
+        });
       });
     }
 
@@ -1829,13 +1934,9 @@
     });
 
     const form = el.querySelector("[data-exit-form]");
+    // Submit handled globally in forms() → thanks modal + reset.
     if (form) {
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        form.classList.add("is-sent");
-        const thanks = form.querySelector(".exit-modal__thanks");
-        if (thanks) thanks.hidden = false;
-      });
+      form.querySelectorAll(".exit-modal__thanks").forEach((n) => n.remove());
     }
 
     let armed = false;
@@ -1897,11 +1998,131 @@
 
   stickyLead();
   prodoctorov();
+  const catalogFilters = () => {
+    const root = doc.querySelector("[data-catalog]");
+    if (!root || typeof ALBA === "undefined" || !ALBA.ajax) return;
+    const form = root.querySelector("[data-catalog-filters]");
+    const results = root.querySelector("[data-catalog-results]");
+    const countEl = root.querySelector("[data-catalog-count]");
+    const applyBtn = form?.querySelector(".catalog-filters__apply");
+    if (!form || !results) return;
+
+    form.classList.add("is-live");
+    if (applyBtn) applyBtn.hidden = true;
+
+    let timer = 0;
+    let controller = null;
+
+    const syncChips = () => {
+      form.querySelectorAll(".catalog-chip").forEach((lab) => {
+        const input = lab.querySelector("input");
+        lab.classList.toggle("is-on", !!(input && input.checked));
+      });
+    };
+
+    const buildParams = (paged) => {
+      const fd = new FormData(form);
+      const params = new URLSearchParams();
+      params.set("action", "alba_catalog");
+      if (ALBA.city && ALBA.city.slug) params.set("city", ALBA.city.slug);
+      const q = (fd.get("q") || "").toString().trim();
+      if (q) params.set("q", q);
+      fd.getAll("direction[]").forEach((v) => params.append("direction[]", v));
+      fd.getAll("format[]").forEach((v) => params.append("format[]", v));
+      if (paged && paged > 1) params.set("paged", String(paged));
+      return params;
+    };
+
+    const pushUrl = (paged) => {
+      const params = new URLSearchParams();
+      const fd = new FormData(form);
+      const q = (fd.get("q") || "").toString().trim();
+      if (q) params.set("q", q);
+      fd.getAll("direction[]").forEach((v) => params.append("direction[]", v));
+      fd.getAll("format[]").forEach((v) => params.append("format[]", v));
+      if (paged && paged > 1) params.set("paged", String(paged));
+      const base = form.getAttribute("action") || window.location.pathname;
+      const qs = params.toString();
+      const url = qs ? `${base}?${qs}#catalog` : `${base}#catalog`;
+      window.history.replaceState({}, "", url);
+    };
+
+    const load = (paged = 1) => {
+      syncChips();
+      if (controller) controller.abort();
+      controller = new AbortController();
+      root.classList.add("is-loading");
+      const params = buildParams(paged);
+      fetch(ALBA.ajax, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
+        body: params.toString(),
+        signal: controller.signal,
+        credentials: "same-origin"
+      })
+        .then((r) => r.json())
+        .then((data) => {
+          if (!data || !data.success || !data.data) return;
+          results.innerHTML = data.data.html || "";
+          if (countEl) {
+            countEl.innerHTML = `Найдено: <strong>${data.data.total ?? 0}</strong>`;
+          }
+          pushUrl(data.data.paged || 1);
+        })
+        .catch((err) => {
+          if (err && err.name === "AbortError") return;
+        })
+        .finally(() => {
+          root.classList.remove("is-loading");
+        });
+    };
+
+    const schedule = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => load(1), 220);
+    };
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      load(1);
+    });
+
+    form.querySelectorAll("[data-catalog-filter]").forEach((el) => {
+      el.addEventListener("change", schedule);
+    });
+    const qInput = form.querySelector("[data-catalog-q]");
+    if (qInput) {
+      qInput.addEventListener("input", schedule);
+      qInput.addEventListener("search", schedule);
+    }
+
+    results.addEventListener("click", (e) => {
+      const link = e.target.closest("[data-catalog-page]");
+      if (!link) return;
+      e.preventDefault();
+      const page = parseInt(link.getAttribute("data-catalog-page") || "1", 10) || 1;
+      load(page);
+      root.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    const reset = form.querySelector("[data-catalog-reset]");
+    if (reset) {
+      reset.addEventListener("click", (e) => {
+        e.preventDefault();
+        form.querySelectorAll("input[type=checkbox]").forEach((c) => { c.checked = false; });
+        if (qInput) qInput.value = "";
+        syncChips();
+        load(1);
+      });
+    }
+  };
+
   pageFunnels();
   homeFunnels();
   splitHeadings();
   geo();
   catalogNav();
+  catalogFilters();
   preload();
   tilt();
   header();

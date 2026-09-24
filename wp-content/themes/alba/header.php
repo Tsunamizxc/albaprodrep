@@ -30,7 +30,7 @@
           </div>
         </div>
         <div class="nav__drop">
-          <button class="nav__btn" type="button">Программы <svg viewBox="0 0 12 12" fill="none"><path d="M2 4.5 6 8.5 10 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+          <a class="nav__btn" href="<?php echo esc_url( alba_city_url( 'programs' ) ); ?>">Программы <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4.5 6 8.5 10 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
           <div class="nav__menu">
             <a class="nav__catalog" href="<?php echo esc_url( alba_city_url( 'programs' ) ); ?>">Весь каталог</a>
             <?php

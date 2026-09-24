@@ -187,25 +187,6 @@
   );
 
   doc.addEventListener("DOMContentLoaded", function () {
-    doc.querySelectorAll("form[data-alba-lead], form[data-form]").forEach(function (form) {
-      form.addEventListener("submit", function () {
-        var phone = form.querySelector('[name="phone"]');
-        if (!phone || !phone.value) return;
-        var fd = new FormData();
-        fd.append("action", "alba_lead");
-        fd.append("nonce", ALBA.nonce);
-        fd.append("phone", phone.value);
-        var name = form.querySelector('[name="name"]');
-        var prog = form.querySelector('[name="program"]');
-        if (name) fd.append("name", name.value);
-        if (prog) fd.append("program", prog.value);
-        fd.append("page", location.href);
-        var score = form.querySelector("[data-test-score-field]");
-        var brief = form.querySelector("[data-test-brief-field]");
-        if (score && score.value) fd.append("test_score", score.value);
-        if (brief && brief.value) fd.append("test_brief", brief.value);
-        fetch(ALBA.ajax, { method: "POST", body: fd, credentials: "same-origin" });
-      });
-    });
+    // Lead forms are handled in main.js (thanks modal + reset).
   });
 })();

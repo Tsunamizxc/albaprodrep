@@ -254,6 +254,13 @@ function alba_get_city_by_slug( $slug ) {
  */
 function alba_get_current_city() {
 	static $current = null;
+	if ( ! empty( $GLOBALS['alba_force_city_slug'] ) ) {
+		$forced = alba_get_city_by_slug( sanitize_title( $GLOBALS['alba_force_city_slug'] ) );
+		if ( $forced ) {
+			$current = $forced;
+			return $current;
+		}
+	}
 	if ( null !== $current ) {
 		return $current;
 	}

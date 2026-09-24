@@ -23,6 +23,7 @@ require_once ALBA_DIR . '/inc/acf-fields.php';
 require_once ALBA_DIR . '/inc/page-blocks.php';
 require_once ALBA_DIR . '/inc/page-acf.php';
 require_once ALBA_DIR . '/inc/page-seed-hubs.php';
+require_once ALBA_DIR . '/inc/catalog-query.php';
 require_once ALBA_DIR . '/inc/service-acf.php';
 require_once ALBA_DIR . '/inc/doctor-acf.php';
 require_once ALBA_DIR . '/inc/quiz.php';

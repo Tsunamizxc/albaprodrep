@@ -20,6 +20,8 @@ function alba_get_integration( $key, $default = '' ) {
 add_action(
 	'phpmailer_init',
 	function ( $phpmailer ) {
+		// Prevent admin/UI hangs when remote SMTP is unreachable.
+		$phpmailer->Timeout = 12;
 		if ( ! alba_get_integration( 'smtp_enabled' ) ) {
 			return;
 		}
@@ -44,6 +46,38 @@ add_action(
 		}
 	}
 );
+
+/**
+ * Quick TCP probe for SMTP host:port.
+ *
+ * @param string $host Host.
+ * @param int    $port Port.
+ * @param int    $timeout Seconds.
+ * @return true|WP_Error
+ */
+function alba_smtp_probe( $host, $port, $timeout = 5 ) {
+	$host = trim( (string) $host );
+	$port = (int) $port;
+	if ( ! $host || $port < 1 ) {
+		return new WP_Error( 'smtp_probe', 'Не указан SMTP host или port.' );
+	}
+	$errno  = 0;
+	$errstr = '';
+	$fp     = @fsockopen( $host, $port, $errno, $errstr, $timeout );
+	if ( ! $fp ) {
+		return new WP_Error(
+			'smtp_unreachable',
+			sprintf(
+				'Сервер не может подключиться к %s:%d (%s). Исходящие SMTP-порты, скорее всего, закрыты на хостинге — попросите провайдера открыть исходящие 465/587 или смените способ отправки.',
+				$host,
+				$port,
+				$errstr ? $errstr : ( 'errno ' . $errno )
+			)
+		);
+	}
+	fclose( $fp );
+	return true;
+}
 
 /**
  * Send lead to CRM webhook.
@@ -135,6 +169,78 @@ function alba_handle_lead() {
 		)
 	);
 }
+
+/**
+ * Admin: send SMTP test email.
+ */
+function alba_smtp_test() {
+	check_ajax_referer( 'alba_smtp_test', 'nonce' );
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_send_json_error( array( 'message' => 'Недостаточно прав.' ), 403 );
+	}
+
+	$to = isset( $_POST['to'] ) ? sanitize_email( wp_unslash( $_POST['to'] ) ) : '';
+	if ( ! $to || ! is_email( $to ) ) {
+		wp_send_json_error( array( 'message' => 'Укажите корректный email.' ), 400 );
+	}
+
+	@set_time_limit( 25 );
+
+	$host = (string) alba_get_integration( 'smtp_host' );
+	$port = (int) alba_get_integration( 'smtp_port', 587 );
+	if ( alba_get_integration( 'smtp_enabled' ) && $host ) {
+		$probe = alba_smtp_probe( $host, $port, 5 );
+		if ( is_wp_error( $probe ) ) {
+			wp_send_json_error( array( 'message' => $probe->get_error_message() ) );
+		}
+	}
+
+	$mail_error = null;
+	$on_fail    = function ( $error ) use ( &$mail_error ) {
+		$mail_error = $error;
+	};
+	add_action( 'wp_mail_failed', $on_fail );
+
+	$subject = 'Тест SMTP — клиника Альба';
+	$body    = "Это тестовое письмо с сайта " . home_url( '/' ) . "\n\n"
+		. 'Время: ' . wp_date( 'd.m.Y H:i:s' ) . "\n"
+		. 'SMTP: ' . ( alba_get_integration( 'smtp_enabled' ) ? 'включён' : 'выключен' ) . "\n"
+		. 'Host: ' . ( $host ?: '—' ) . ':' . $port . "\n";
+
+	$headers = array( 'Content-Type: text/plain; charset=UTF-8' );
+	$ok      = wp_mail( $to, $subject, $body, $headers );
+	remove_action( 'wp_mail_failed', $on_fail );
+
+	if ( $ok ) {
+		wp_send_json_success(
+			array(
+				'message' => 'Письмо отправлено на ' . $to . '. Проверьте входящие и «Спам».',
+			)
+		);
+	}
+
+	$detail = '';
+	if ( $mail_error instanceof WP_Error ) {
+		$detail = $mail_error->get_error_message();
+	}
+	if ( ! $detail ) {
+		$detail = 'wp_mail вернул ошибку. Проверьте host/port/логин/пароль.';
+	}
+	if ( false !== stripos( $detail, 'connect' ) || false !== stripos( $detail, 'timed out' ) || false !== stripos( $detail, 'таймаут' ) ) {
+		$detail .= ' На этом сервере исходящие SMTP-подключения до удалённых хостов недоступны.';
+	}
+	// Timeweb / Exim: mailbox or outgoing mail disabled.
+	if ( false !== stripos( $detail, 'Disabled' ) || false !== stripos( $detail, '550' ) ) {
+		$user = (string) alba_get_integration( 'smtp_user' );
+		$detail  = 'SMTP-сервер ответил 550 Disabled — ящик '
+			. ( $user ? $user : 'SMTP-пользователя' )
+			. ' авторизуется, но отправка с него запрещена. '
+			. 'В панели Timeweb откройте почтовый ящик: убедитесь, что он не отключён, включена исходящая почта/SMTP, нет блокировки за спам. '
+			. 'Либо создайте новый ящик и укажите его в User / From / Password.';
+	}
+	wp_send_json_error( array( 'message' => 'Ошибка отправки: ' . $detail ) );
+}
+add_action( 'wp_ajax_alba_smtp_test', 'alba_smtp_test' );
 
 /**
  * Head pixels: Yandex Direct / Metrika + VK pixel.
