@@ -1,0 +1,61 @@
+# WordPress config & secrets
+wp-config.php
+wp-config-*.php
+!wp-config-sample.php
+.env
+.env.*
+
+# Uploads & generated media
+wp-content/uploads/
+wp-content/blogs.dir/
+wp-content/upgrade/
+wp-content/updraft/
+wp-content/backup*/
+wp-content/backups-dup-lite/
+wp-content/backups/
+wp-content/cache/
+wp-content/cache-*/
+wp-content/*/cache/
+wp-content/w3tc-config/
+wp-content/advanced-cache.php
+wp-content/object-cache.php
+wp-content/wp-cache-config.php
+wp-content/db.php
+wp-content/database/
+
+# Logs & debug
+*.log
+error_log
+wp-content/debug.log
+debug.log
+
+# WP-CLI binary
+wp-cli.phar
+
+# Dependencies (if any)
+node_modules/
+vendor/
+bower_components/
+
+# OS & editors
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.sublime-*
+
+# Local / temp
+*.tmp
+*.temp
+*.bak
+*.sql
+*.sql.gz
+*.tar
+*.tar.gz
+*.zip
+!wp-content/themes/**/*.zip
+!wp-content/plugins/**/*.zip
