@@ -328,16 +328,28 @@ function alba_city_url( $path = '', $city_slug = '' ) {
 	if ( preg_match( '/^doctor-(.+)$/i', $path, $m ) ) {
 		$path = 'doctor/' . $m[1];
 	} elseif ( preg_match( '/^article-(.+)$/i', $path ) ) {
+		$post = get_page_by_path( $path, OBJECT, 'post' );
+		if ( $post && function_exists( 'alba_service_pretty_url' ) ) {
+			return alba_service_pretty_url( $post->ID, $city_slug );
+		}
 		$path = 'article/' . $path;
+	}
+
+	// Hub pages → translit SEO path (methods → metody-pomoshchi, …).
+	if ( $path && false === strpos( $path, '/' ) && function_exists( 'alba_page_seo_paths' ) ) {
+		$map = alba_page_seo_paths();
+		if ( isset( $map[ $path ] ) ) {
+			$path = $map[ $path ];
+		}
 	}
 
 	$base = trailingslashit( home_url( '/' . $city_slug ) );
 	if ( ! $path ) {
 		return untrailingslashit( $base ) . '/';
 	}
-	// Keep trailing slash for doctor/article and multi-segment SEO paths.
-	if ( preg_match( '#^(doctor|article)/#', $path ) || false !== strpos( $path, '/' ) ) {
+	// Keep trailing slash for doctor and multi-segment SEO paths.
+	if ( preg_match( '#^doctor/#', $path ) || false !== strpos( $path, '/' ) ) {
 		return $base . trailingslashit( $path );
 	}
-	return $base . $path;
+	return $base . trailingslashit( $path );
 }

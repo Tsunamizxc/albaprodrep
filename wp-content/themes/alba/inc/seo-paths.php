@@ -1,6 +1,6 @@
 <?php
 /**
- * Human-readable transliterated SEO paths for services/programs.
+ * Human-readable transliterated SEO paths for services, programs, articles and hub pages.
  *
  * Example: /omsk/vyvod-iz-zapoya/kapelnitsa-ot-zapoya/
  * instead of /omsk/service/zapoy/
@@ -12,63 +12,95 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/** Rewrite rules version — bump to flush on deploy. */
+define( 'ALBA_REWRITE_VER', 'seo-v3' );
+
 /**
- * Primary SEO path overrides by internal post_name.
+ * Primary SEO path overrides by internal post_name (service/program/post).
  *
  * @return array<string,string>
  */
 function alba_seo_path_overrides() {
 	return array(
-		// Examples from the brief.
-		'alcohol-home'       => 'prokapatsya-ot-alcogolya-na-domu',
-		'zapoy'              => 'vyvod-iz-zapoya/vyvod-iz-zapoya-na-domu',
-		'visit'              => 'narkolog-na-dom',
-		'help'               => 'narkologicheskaya-pomosh/kruglosutochno',
-		'detox'              => 'vyvod-iz-zapoya/vyvod-iz-zapoya-v-statsionare',
-		'alcohol-hangover'   => 'vyvod-iz-zapoya/snyatie-pohmelnogo-sindroma',
-		'sober'              => 'vyvod-iz-zapoya/medicinskiy-vytrezvitel',
-		'ambulance'          => 'vyvod-iz-zapoya/pomosh-narkologa',
-		'toxicologist'       => 'kapelnitsa-pri-otravlenii-alkogolem',
-		// Zapoy drip sibling.
-		'alcohol'            => 'lechenie-alkogolizma',
-		// Common groups.
-		'code'               => 'kodirovanie',
-		'code-home'          => 'kodirovanie/kodirovanie-na-domu',
-		'code-torpedo'       => 'kodirovanie/torpedo',
-		'code-esperal'       => 'kodirovanie/esperal',
-		'code-double'        => 'kodirovanie/dvoynoy-blok',
-		'code-dovzhenko'     => 'kodirovanie/metod-dovzhenko',
-		'code-vivitrol'      => 'kodirovanie/vivitrol',
-		'code-implant'       => 'kodirovanie/vshivanie-ampuly',
-		'code-hypnosis'      => 'kodirovanie/gipnoz',
-		'code-shot'          => 'kodirovanie/ukol',
-		'code-needle'        => 'kodirovanie/igloukalyvanie',
-		'code-aquilong'      => 'kodirovanie/akvilong',
-		'code-naltrexone'    => 'kodirovanie/naltrekson',
-		'code-disulfiram'    => 'kodirovanie/disulfiram',
-		'code-algominal'     => 'kodirovanie/algominal',
-		'code-sit'           => 'kodirovanie/sit',
-		'decode'             => 'kodirovanie/raskodirovanie',
-		'drugs'              => 'lechenie-narkomanii',
-		'withdrawal'         => 'snyatie-lomki',
-		'ubod'               => 'ubod',
-		'rehab'              => 'reabilitatsiya',
-		'rehab-alcohol'      => 'reabilitatsiya/alkogolizm',
-		'rehab-12'           => 'reabilitatsiya/12-shagov',
-		'rehab-daytop'       => 'reabilitatsiya/day-top',
-		'psychiatry'         => 'psihiatriya',
-		'gambling'           => 'lechenie-igrovoy-zavisimosti',
-		'betting'            => 'lechenie-zavisimosti-ot-stavok',
-		'consult'            => 'konsultatsiya-narkologa',
-		'check'              => 'diagnostika',
-		'family'             => 'semeynaya-programma',
-		'drugtest'           => 'test-na-narkotiki',
-		// Programs (courses).
-		'zapoy-1day'         => 'vyvod-iz-zapoya/kurs-1-den',
-		'zapoy-2days'        => 'vyvod-iz-zapoya/kurs-2-dnya',
-		'zapoy-3days'        => 'vyvod-iz-zapoya/kurs-3-dnya',
-		'zapoy-5days'        => 'vyvod-iz-zapoya/kurs-5-dney',
-		'zapoy-7days'        => 'vyvod-iz-zapoya/kurs-7-dney',
+		// Services from brief.
+		'alcohol-home'     => 'prokapatsya-ot-alcogolya-na-domu',
+		'zapoy'            => 'vyvod-iz-zapoya/vyvod-iz-zapoya-na-domu',
+		'visit'            => 'narkolog-na-dom',
+		'help'             => 'narkologicheskaya-pomosh/kruglosutochno',
+		'detox'            => 'vyvod-iz-zapoya/vyvod-iz-zapoya-v-statsionare',
+		'alcohol-hangover' => 'vyvod-iz-zapoya/snyatie-pohmelnogo-sindroma',
+		'sober'            => 'vyvod-iz-zapoya/medicinskiy-vytrezvitel',
+		'ambulance'        => 'vyvod-iz-zapoya/pomosh-narkologa',
+		'toxicologist'     => 'kapelnitsa-pri-otravlenii-alkogolem',
+		'alcohol'          => 'lechenie-alkogolizma',
+		'code'             => 'kodirovanie',
+		'code-home'        => 'kodirovanie/kodirovanie-na-domu',
+		'code-torpedo'     => 'kodirovanie/torpedo',
+		'code-esperal'     => 'kodirovanie/esperal',
+		'code-double'      => 'kodirovanie/dvoynoy-blok',
+		'code-dovzhenko'   => 'kodirovanie/metod-dovzhenko',
+		'code-vivitrol'    => 'kodirovanie/vivitrol',
+		'code-implant'     => 'kodirovanie/vshivanie-ampuly',
+		'code-hypnosis'    => 'kodirovanie/gipnoz',
+		'code-shot'        => 'kodirovanie/ukol',
+		'code-needle'      => 'kodirovanie/igloukalyvanie',
+		'code-aquilong'    => 'kodirovanie/akvilong',
+		'code-naltrexone'  => 'kodirovanie/naltrekson',
+		'code-disulfiram'  => 'kodirovanie/disulfiram',
+		'code-algominal'   => 'kodirovanie/algominal',
+		'code-sit'         => 'kodirovanie/sit',
+		'decode'           => 'kodirovanie/raskodirovanie',
+		'drugs'            => 'lechenie-narkomanii',
+		'withdrawal'       => 'snyatie-lomki',
+		'ubod'             => 'ubod',
+		'rehab'            => 'reabilitatsiya',
+		'rehab-alcohol'    => 'reabilitatsiya/alkogolizm',
+		'rehab-12'         => 'reabilitatsiya/12-shagov',
+		'rehab-daytop'     => 'reabilitatsiya/day-top',
+		'psychiatry'       => 'psihiatriya',
+		'gambling'         => 'lechenie-igrovoy-zavisimosti',
+		'betting'          => 'lechenie-zavisimosti-ot-stavok',
+		'consult'          => 'konsultatsiya-narkologa',
+		'check'            => 'diagnostika',
+		'family'           => 'semeynaya-programma',
+		'drugtest'         => 'test-na-narkotiki',
+		// Programs.
+		'zapoy-1day'       => 'vyvod-iz-zapoya/kurs-1-den',
+		'zapoy-2days'      => 'vyvod-iz-zapoya/kurs-2-dnya',
+		'zapoy-3days'      => 'vyvod-iz-zapoya/kurs-3-dnya',
+		'zapoy-5days'      => 'vyvod-iz-zapoya/kurs-5-dney',
+		'zapoy-7days'      => 'vyvod-iz-zapoya/kurs-7-dney',
+		// Articles.
+		'article-detox'    => 'stati/kak-prohodit-detoks-v-pervye-troe-sutok',
+		'article-anon'     => 'stati/anonimnost-chto-klinika-mozhet-obeshchat',
+		'article-family'   => 'stati/esli-pet-blizkiy-chto-govorit',
+	);
+}
+
+/**
+ * Hub pages: internal slug → translit path.
+ *
+ * @return array<string,string>
+ */
+function alba_page_seo_paths() {
+	return array(
+		'methods'  => 'metody-pomoshchi',
+		'articles' => 'stati',
+		'reviews'  => 'otzyvy',
+		'licenses' => 'litsenzii',
+		'gallery'  => 'galereya',
+		'doctors'  => 'vrachi',
+		'programs' => 'programmy',
+		'prices'   => 'tseny',
+		'contacts' => 'kontakty',
+		'about'    => 'o-klinike',
+		'links'    => 'poleznye-ssylki',
+		'sitemap'  => 'karta-sayta',
+		'privacy'  => 'politika-pdn',
+		'consent'  => 'soglasie',
+		'terms'    => 'usloviya',
+		'legal'    => 'rekvizity',
+		'test'     => 'test-brif',
 	);
 }
 
@@ -78,22 +110,51 @@ function alba_seo_path_overrides() {
  * @return array<string,string>
  */
 function alba_seo_path_aliases() {
-	return array(
-		'vyvod-iz-zapoya-na-domu'                         => 'vyvod-iz-zapoya/vyvod-iz-zapoya-na-domu',
-		'vyvod-iz-zapoya/kapelnitsa-ot-zapoya'            => 'vyvod-iz-zapoya/snyatie-pohmelnogo-sindroma',
-		'narkology/narkologicheskaya-pomoshh/na-domu'     => 'narkolog-na-dom',
-		'narkologicheskaya-pomoshh/na-domu'               => 'narkolog-na-dom',
-		'vyvod-iz-zapoya/narkolog-na-dom'                 => 'narkolog-na-dom',
-		'service/zapoy'                                   => 'vyvod-iz-zapoya/vyvod-iz-zapoya-na-domu',
-		'service/visit'                                   => 'narkolog-na-dom',
-		'service/help'                                    => 'narkologicheskaya-pomosh/kruglosutochno',
-		'service/detox'                                   => 'vyvod-iz-zapoya/vyvod-iz-zapoya-v-statsionare',
-		'service/alcohol-hangover'                        => 'vyvod-iz-zapoya/snyatie-pohmelnogo-sindroma',
-		'service/sober'                                   => 'vyvod-iz-zapoya/medicinskiy-vytrezvitel',
-		'service/alcohol-home'                            => 'prokapatsya-ot-alcogolya-na-domu',
-		'service/ambulance'                               => 'vyvod-iz-zapoya/pomosh-narkologa',
-		'service/toxicologist'                            => 'kapelnitsa-pri-otravlenii-alkogolem',
+	$aliases = array(
+		'vyvod-iz-zapoya-na-domu'                     => 'vyvod-iz-zapoya/vyvod-iz-zapoya-na-domu',
+		'vyvod-iz-zapoya/kapelnitsa-ot-zapoya'        => 'vyvod-iz-zapoya/snyatie-pohmelnogo-sindroma',
+		'narkology/narkologicheskaya-pomoshh/na-domu' => 'narkolog-na-dom',
+		'narkologicheskaya-pomoshh/na-domu'           => 'narkolog-na-dom',
+		'vyvod-iz-zapoya/narkolog-na-dom'             => 'narkolog-na-dom',
+		'methods'                                     => 'metody-pomoshchi',
+		'articles'                                    => 'stati',
+		'reviews'                                     => 'otzyvy',
+		'licenses'                                    => 'litsenzii',
+		'gallery'                                     => 'galereya',
+		'doctors'                                     => 'vrachi',
+		'programs'                                    => 'programmy',
+		'prices'                                      => 'tseny',
+		'contacts'                                    => 'kontakty',
+		'about'                                       => 'o-klinike',
+		'links'                                       => 'poleznye-ssylki',
+		'sitemap'                                     => 'karta-sayta',
+		'privacy'                                     => 'politika-pdn',
+		'consent'                                     => 'soglasie',
+		'terms'                                       => 'usloviya',
+		'legal'                                       => 'rekvizity',
 	);
+
+	foreach ( array( 'zapoy', 'visit', 'help', 'detox', 'alcohol-hangover', 'sober', 'alcohol-home', 'ambulance', 'toxicologist' ) as $slug ) {
+		$ov = alba_seo_path_overrides();
+		if ( isset( $ov[ $slug ] ) ) {
+			$aliases[ 'service/' . $slug ] = $ov[ $slug ];
+		}
+	}
+	foreach ( array( 'zapoy-1day', 'zapoy-2days', 'zapoy-3days', 'zapoy-5days', 'zapoy-7days' ) as $slug ) {
+		$ov = alba_seo_path_overrides();
+		if ( isset( $ov[ $slug ] ) ) {
+			$aliases[ 'program/' . $slug ]  = $ov[ $slug ];
+			$aliases[ 'programs/' . $slug ] = $ov[ $slug ];
+		}
+	}
+	foreach ( array( 'article-detox', 'article-anon', 'article-family' ) as $slug ) {
+		$ov = alba_seo_path_overrides();
+		if ( isset( $ov[ $slug ] ) ) {
+			$aliases[ 'article/' . $slug ] = $ov[ $slug ];
+		}
+	}
+
+	return $aliases;
 }
 
 /**
@@ -141,10 +202,11 @@ function alba_seo_path_from_post( $post ) {
 
 	$title = get_the_title( $post );
 	$path  = alba_translit_slug( $title );
+	$name  = $post->post_name;
 
-	// Soft grouping by prefix.
-	$name = $post->post_name;
-	if ( 0 === strpos( $name, 'code-' ) || 'code' === $name || 'decode' === $name ) {
+	if ( 'post' === $post->post_type ) {
+		$path = 'stati/' . $path;
+	} elseif ( 0 === strpos( $name, 'code-' ) || 'code' === $name || 'decode' === $name ) {
 		$leaf = alba_translit_slug( preg_replace( '/^Кодирование\s*/ui', '', $title ) );
 		$path = 'kodirovanie/' . ( $leaf ? $leaf : $path );
 	} elseif ( 0 === strpos( $name, 'drugs-' ) || 'drugs' === $name ) {
@@ -159,7 +221,7 @@ function alba_seo_path_from_post( $post ) {
 	} elseif ( 0 === strpos( $name, 'psy-' ) || 'psychiatry' === $name ) {
 		$leaf = alba_translit_slug( preg_replace( '/^Лечение\s*/ui', '', $title ) );
 		$path = 'psihiatriya/' . ( $leaf ? $leaf : $path );
-	} elseif ( 0 === strpos( $name, 'zapoy-' ) ) {
+	} elseif ( 0 === strpos( $name, 'zapoy-' ) || 'program' === $post->post_type ) {
 		$path = 'vyvod-iz-zapoya/' . alba_translit_slug( $title );
 	}
 
@@ -168,7 +230,7 @@ function alba_seo_path_from_post( $post ) {
 }
 
 /**
- * Get stored or computed SEO path for a service/program.
+ * Get stored or computed SEO path for content post.
  *
  * @param int $post_id Post ID.
  * @return string
@@ -177,6 +239,14 @@ function alba_get_seo_path( $post_id ) {
 	$post_id = (int) $post_id;
 	if ( ! $post_id ) {
 		return '';
+	}
+	$post = get_post( $post_id );
+	if ( $post && 'page' === $post->post_type ) {
+		$map = alba_page_seo_paths();
+		if ( isset( $map[ $post->post_name ] ) ) {
+			return $map[ $post->post_name ];
+		}
+		return $post->post_name;
 	}
 	$stored = get_post_meta( $post_id, 'alba_seo_path', true );
 	if ( is_string( $stored ) && $stored !== '' ) {
@@ -190,7 +260,7 @@ function alba_get_seo_path( $post_id ) {
 }
 
 /**
- * Pretty city URL for a service/program post.
+ * Pretty city URL for a service/program/article post.
  *
  * @param int    $post_id   Post ID.
  * @param string $city_slug City.
@@ -208,18 +278,38 @@ function alba_service_pretty_url( $post_id, $city_slug = '' ) {
 }
 
 /**
- * Reserved first segments that are not SEO services.
+ * Pretty city URL for a page by slug or ID.
+ *
+ * @param int|string $page Page ID or slug.
+ * @param string     $city_slug City.
+ * @return string
+ */
+function alba_page_pretty_url( $page, $city_slug = '' ) {
+	$city_slug = $city_slug ? sanitize_title( $city_slug ) : alba_get_current_city()['slug'];
+	$post      = is_numeric( $page ) ? get_post( (int) $page ) : get_page_by_path( (string) $page );
+	if ( ! $post || 'page' !== $post->post_type ) {
+		$path = is_string( $page ) ? $page : '';
+		$map  = alba_page_seo_paths();
+		if ( isset( $map[ $path ] ) ) {
+			$path = $map[ $path ];
+		}
+		return trailingslashit( home_url( '/' . $city_slug . '/' . ltrim( $path, '/' ) ) );
+	}
+	return alba_service_pretty_url( $post->ID, $city_slug );
+}
+
+/**
+ * Reserved first segments that stay as system routes.
  *
  * @return string[]
  */
 function alba_seo_reserved_roots() {
-	$pages = array( 'about', 'prices', 'contacts', 'programs', 'articles', 'doctors', 'gallery', 'reviews', 'licenses', 'methods', 'links', 'sitemap', 'privacy', 'consent', 'terms', 'legal', 'test', 'home' );
-	$sys   = array( 'service', 'program', 'programs', 'doctor', 'article', 'wp-admin', 'wp-json', 'wp-content', 'wp-includes', 'wp-login.php', 'feed', 'comments', 'page' );
-	return array_values( array_unique( array_merge( $pages, $sys, alba_get_city_slugs() ) ) );
+	$sys = array( 'service', 'program', 'programs', 'doctor', 'article', 'wp-admin', 'wp-json', 'wp-content', 'wp-includes', 'wp-login.php', 'feed', 'comments', 'page', 'home' );
+	return array_values( array_unique( array_merge( $sys, alba_get_city_slugs() ) ) );
 }
 
 /**
- * Find service/program by SEO path.
+ * Find service/program/article by SEO path.
  *
  * @param string $path Path without city.
  * @return WP_Post|null
@@ -230,9 +320,19 @@ function alba_find_by_seo_path( $path ) {
 		return null;
 	}
 
+	// Hub page by SEO path.
+	$page_map = alba_page_seo_paths();
+	$slug     = array_search( $path, $page_map, true );
+	if ( false !== $slug ) {
+		$page = get_page_by_path( $slug );
+		if ( $page ) {
+			return $page;
+		}
+	}
+
 	$q = new WP_Query(
 		array(
-			'post_type'              => array( 'service', 'program' ),
+			'post_type'              => array( 'service', 'program', 'post' ),
 			'post_status'            => 'publish',
 			'posts_per_page'         => 1,
 			'no_found_rows'          => true,
@@ -246,11 +346,13 @@ function alba_find_by_seo_path( $path ) {
 		return $q->posts[0];
 	}
 
-	// Fallback: compute from overrides / titles without meta yet.
 	$overrides = alba_seo_path_overrides();
 	$slug      = array_search( $path, $overrides, true );
 	if ( false !== $slug ) {
-		$post = get_page_by_path( $slug, OBJECT, array( 'service', 'program' ) );
+		$post = get_page_by_path( $slug, OBJECT, array( 'service', 'program', 'post' ) );
+		if ( ! $post && 0 === strpos( $slug, 'article-' ) ) {
+			$post = get_page_by_path( $slug, OBJECT, 'post' );
+		}
 		if ( $post ) {
 			update_post_meta( $post->ID, 'alba_seo_path', $path );
 			return $post;
@@ -259,7 +361,7 @@ function alba_find_by_seo_path( $path ) {
 
 	$all = get_posts(
 		array(
-			'post_type'      => array( 'service', 'program' ),
+			'post_type'      => array( 'service', 'program', 'post' ),
 			'post_status'    => 'publish',
 			'posts_per_page' => -1,
 			'fields'         => 'ids',
@@ -287,9 +389,14 @@ function alba_seo_resolve_alias( $path ) {
 	if ( isset( $aliases[ $path ] ) ) {
 		return trim( $aliases[ $path ], '/' );
 	}
-	// Old /service/{slug} and /program/{slug}.
-	if ( preg_match( '#^(service|program)/([^/]+)$#', $path, $m ) ) {
+	if ( preg_match( '#^(service|program|programs)/([^/]+)$#', $path, $m ) ) {
 		$post = get_page_by_path( $m[2], OBJECT, array( 'service', 'program' ) );
+		if ( $post ) {
+			return alba_get_seo_path( $post->ID );
+		}
+	}
+	if ( preg_match( '#^article/([^/]+)$#', $path, $m ) ) {
+		$post = get_page_by_path( $m[1], OBJECT, 'post' );
 		if ( $post ) {
 			return alba_get_seo_path( $post->ID );
 		}
@@ -298,20 +405,45 @@ function alba_seo_resolve_alias( $path ) {
 }
 
 /**
- * Seed alba_seo_path meta for all services/programs (unique paths).
+ * Apply resolved content post into query vars.
+ *
+ * @param array   $qv   Query vars.
+ * @param WP_Post $post Post.
+ * @return array
+ */
+function alba_seo_qv_from_post( $qv, $post ) {
+	unset( $qv['pagename'], $qv['page_id'], $qv['alba_path'] );
+	if ( 'page' === $post->post_type ) {
+		$qv['pagename'] = $post->post_name;
+		$qv['page_id']  = $post->ID;
+		return $qv;
+	}
+	if ( 'post' === $post->post_type ) {
+		$qv['name']      = $post->post_name;
+		$qv['post_type'] = 'post';
+		return $qv;
+	}
+	$qv[ $post->post_type ] = $post->post_name;
+	$qv['name']             = $post->post_name;
+	$qv['post_type']        = $post->post_type;
+	return $qv;
+}
+
+/**
+ * Seed alba_seo_path meta for services/programs/articles.
  *
  * @param bool $force Recompute.
  * @return array{updated:int,skipped:int}
  */
 function alba_seed_seo_paths( $force = false ) {
-	$option = 'alba_seo_paths_seeded_v2';
+	$option = 'alba_seo_paths_seeded_v3';
 	if ( ! $force && get_option( $option ) ) {
 		return array( 'updated' => 0, 'skipped' => 0 );
 	}
 
 	$posts = get_posts(
 		array(
-			'post_type'      => array( 'service', 'program' ),
+			'post_type'      => array( 'service', 'program', 'post' ),
 			'post_status'    => 'publish',
 			'posts_per_page' => -1,
 			'orderby'        => 'ID',
@@ -349,8 +481,12 @@ add_action(
 	'init',
 	static function () {
 		alba_seed_seo_paths( false );
+		if ( get_option( 'alba_rewrite_ver' ) !== ALBA_REWRITE_VER ) {
+			flush_rewrite_rules( false );
+			update_option( 'alba_rewrite_ver', ALBA_REWRITE_VER, false );
+		}
 	},
-	25
+	99
 );
 
 add_action(
@@ -370,4 +506,15 @@ add_action(
 		}
 		update_post_meta( $post_id, 'alba_seo_path', alba_seo_path_from_post( $post_id ) );
 	}
+);
+add_action(
+	'save_post',
+	static function ( $post_id, $post ) {
+		if ( wp_is_post_revision( $post_id ) || ! ( $post instanceof WP_Post ) || 'post' !== $post->post_type ) {
+			return;
+		}
+		update_post_meta( $post_id, 'alba_seo_path', alba_seo_path_from_post( $post_id ) );
+	},
+	10,
+	2
 );
