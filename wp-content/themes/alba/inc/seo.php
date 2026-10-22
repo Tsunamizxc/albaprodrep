@@ -10,6 +10,121 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Current request host (lowercase, no port).
+ *
+ * @return string
+ */
+function alba_request_host() {
+	$host = '';
+	if ( ! empty( $_SERVER['HTTP_HOST'] ) ) {
+		$host = (string) wp_unslash( $_SERVER['HTTP_HOST'] );
+	}
+	if ( ! $host ) {
+		$host = (string) wp_parse_url( home_url( '/' ), PHP_URL_HOST );
+	}
+	$host = strtolower( $host );
+	$host = preg_replace( '/:\d+$/', '', $host );
+	return $host ? $host : '';
+}
+
+/**
+ * Whether this host may be indexed by search engines.
+ * Dev (alba.cursiva-dev.ru) — no; production (alba-clinic.ru) — yes.
+ *
+ * @return bool
+ */
+function alba_seo_is_indexable() {
+	$host = alba_request_host();
+	if ( $host && preg_match( '/(^|\.)cursiva-dev\.ru$/i', $host ) ) {
+		return false;
+	}
+	if ( $host && preg_match( '/(^|\.)alba-clinic\.ru$/i', $host ) ) {
+		return true;
+	}
+	// Fallback for unknown hosts: respect WP “Discourage search engines”.
+	return ( '0' !== (string) get_option( 'blog_public' ) );
+}
+
+/**
+ * Force WP visibility: closed on dev, open on prod.
+ */
+add_filter(
+	'pre_option_blog_public',
+	static function ( $pre ) {
+		$host = alba_request_host();
+		if ( $host && preg_match( '/(^|\.)cursiva-dev\.ru$/i', $host ) ) {
+			return '0';
+		}
+		if ( $host && preg_match( '/(^|\.)alba-clinic\.ru$/i', $host ) ) {
+			return '1';
+		}
+		return $pre;
+	}
+);
+
+/**
+ * robots.txt: Disallow all on dev, allow on prod.
+ *
+ * @param string $output Robots.txt body.
+ * @param bool   $public blog_public.
+ * @return string
+ */
+add_filter(
+	'robots_txt',
+	static function ( $output, $public ) {
+		if ( ! alba_seo_is_indexable() ) {
+			return "User-agent: *\nDisallow: /\n";
+		}
+		$lines   = array();
+		$lines[] = 'User-agent: *';
+		$lines[] = 'Allow: /';
+		$lines[] = 'Disallow: /wp-admin/';
+		$lines[] = 'Allow: /wp-admin/admin-ajax.php';
+		$lines[] = '';
+		$lines[] = 'Sitemap: ' . home_url( '/wp-sitemap.xml' );
+		$lines[] = '';
+		return implode( "\n", $lines );
+	},
+	99,
+	2
+);
+
+/**
+ * Meta robots + core wp_robots API.
+ */
+add_filter(
+	'wp_robots',
+	static function ( $robots ) {
+		if ( ! alba_seo_is_indexable() ) {
+			return array(
+				'noindex' => true,
+				'nofollow' => true,
+			);
+		}
+		unset( $robots['noindex'], $robots['nofollow'] );
+		$robots['index']  = true;
+		$robots['follow'] = true;
+		$robots['max-image-preview'] = 'large';
+		$robots['max-snippet']       = -1;
+		return $robots;
+	},
+	99
+);
+
+add_action(
+	'send_headers',
+	static function () {
+		if ( is_admin() || wp_doing_ajax() || wp_doing_cron() ) {
+			return;
+		}
+		if ( ! alba_seo_is_indexable() ) {
+			header( 'X-Robots-Tag: noindex, nofollow', true );
+		}
+	},
+	1
+);
+
+/**
  * Per-entity SEO payload.
  *
  * @param int $post_id Post ID.
