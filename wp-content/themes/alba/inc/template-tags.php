@@ -53,9 +53,11 @@ function alba_fix_legacy_html( $html ) {
 		function ( $mm ) use ( $city ) {
 			$file = $mm[1];
 			$hash = isset( $mm[2] ) ? $mm[2] : '';
-			if ( 0 === strpos( $file, 'service-' ) ) {
-				$slug = preg_replace( '/^service-/', '', $file );
-				return 'href="' . esc_url( home_url( '/' . $city . '/service/' . $slug . '/' ) ) . $hash . '"';
+			if ( 0 === strpos( $file, 'service-' ) || 0 === strpos( $file, 'program-' ) ) {
+				$url = function_exists( 'alba_service_permalink' )
+					? alba_service_permalink( $file )
+					: home_url( '/' . $city . '/service/' . preg_replace( '/^(service|program)-/', '', $file ) . '/' );
+				return 'href="' . esc_url( $url ) . $hash . '"';
 			}
 			if ( 0 === strpos( $file, 'doctor-' ) ) {
 				$slug = preg_replace( '/^doctor-/', '', $file );

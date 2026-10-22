@@ -20,9 +20,8 @@ while ( have_posts() ) :
 				'/href="([^"]+)\.html"/i',
 				function ( $mm ) {
 					$file = $mm[1];
-					if ( 0 === strpos( $file, 'service-' ) ) {
-						$slug = preg_replace( '/^service-/', '', $file );
-						return 'href="' . esc_url( home_url( '/' . alba_get_current_city()['slug'] . '/service/' . $slug . '/' ) ) . '"';
+					if ( 0 === strpos( $file, 'service-' ) || 0 === strpos( $file, 'program-' ) ) {
+						return 'href="' . esc_url( alba_service_permalink( $file ) ) . '"';
 					}
 					if ( 0 === strpos( $file, 'doctor-' ) ) {
 						$slug = preg_replace( '/^doctor-/', '', $file );

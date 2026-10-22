@@ -18,6 +18,7 @@ require_once ALBA_DIR . '/inc/setup.php';
 require_once ALBA_DIR . '/inc/disable-gutenberg.php';
 require_once ALBA_DIR . '/inc/cpt.php';
 require_once ALBA_DIR . '/inc/cities.php';
+require_once ALBA_DIR . '/inc/seo-paths.php';
 require_once ALBA_DIR . '/inc/rewrites.php';
 require_once ALBA_DIR . '/inc/acf-fields.php';
 require_once ALBA_DIR . '/inc/page-blocks.php';

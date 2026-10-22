@@ -441,14 +441,22 @@ function alba_service_permalink( $slug ) {
 	}
 	$stem = preg_replace( '/\.(html?)$/i', '', $slug );
 	$stem = preg_replace( '/^(service|program)-/', '', $stem );
+	$stem = preg_replace( '#^(service|program)/#', '', $stem );
 	$post = get_page_by_path( $stem, OBJECT, array( 'service', 'program' ) );
 	if ( $post ) {
+		if ( function_exists( 'alba_service_pretty_url' ) ) {
+			return alba_service_pretty_url( $post->ID );
+		}
 		return get_permalink( $post );
 	}
 	$city = alba_get_current_city();
-	// Heuristic: zapoy-* courses live as program CPT.
-	$bucket = preg_match( '/^zapoy-/i', $stem ) ? 'program' : 'service';
-	return home_url( '/' . $city['slug'] . '/' . $bucket . '/' . $stem . '/' );
+	if ( function_exists( 'alba_seo_path_overrides' ) ) {
+		$ov = alba_seo_path_overrides();
+		if ( isset( $ov[ $stem ] ) ) {
+			return trailingslashit( home_url( '/' . $city['slug'] . '/' . $ov[ $stem ] ) );
+		}
+	}
+	return trailingslashit( home_url( '/' . $city['slug'] . '/' . $stem ) );
 }
 
 /**
@@ -1186,7 +1194,7 @@ function alba_parse_service_to_acf( $html ) {
 			$out['sticky_form_title'] = trim( wp_strip_all_tags( $fm[1] ) );
 		}
 		if ( preg_match( '/svc-related[\s\S]*?<\/div>/i', $sticky, $rmatch ) ) {
-			if ( preg_match( '/<h3>([\s\S]*?)<\/h3>\s*<div class="svc-related"/i', $sticky, $rh ) ) {
+			if ( preg_match( '/<h3>([^<]*)<\/h3>\s*<div class="svc-related"/i', $sticky, $rh ) ) {
 				$out['sticky_links_heading'] = trim( wp_strip_all_tags( $rh[1] ) );
 			}
 			if ( preg_match_all( '/<a class="svc-related__item"[^>]*href=["\']([^"\']+)["\'][^>]*>\s*<span>([\s\S]*?)<\/span>\s*<b>([\s\S]*?)<\/b>/i', $sticky, $rl, PREG_SET_ORDER ) ) {

@@ -21,20 +21,12 @@ $l = trim( (string) ( $b['lead'] ?? '' ) );
             <ul class="offer__feats"><li>Круглосуточный выезд</li><li>Контроль давления и ЭКГ-рисков</li><li>Сон и восстановление за сутки</li></ul>
           </a>
           <div class="offer__foot">
-            <b>от 1 450 ₽</b>
-            <div class="offer__actions">
-              <button type="button" class="offer__dirs" data-offer-dirs aria-expanded="false">Лечение</button>
-              <a class="offer__cta" href="<?php echo esc_url( alba_city_url( 'service-zapoy' ) ); ?>">Подробнее</a>
+            <b>от 1 300 ₽</b>
+            <div class="offer__actions"><a class="offer__cta" href="<?php echo esc_url( alba_city_url( 'service-zapoy' ) ); ?>">Подробнее</a>
             </div>
           </div>
-          <div class="offer-dirs" data-offer-panel hidden>
-            <div class="offer-dirs__panel">
-              <div class="offer-dirs__head">
-                <strong>Лечение</strong>
-                <button type="button" class="offer-dirs__close" data-offer-dirs-close aria-label="Закрыть">×</button>
-              </div>
-              <div class="offer-dirs__list"><a href="<?php echo esc_url( alba_city_url( 'service-zapoy-1day' ) ); ?>"><span>Вывод из запоя 1 день</span><em>от 8 900 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-zapoy-3days' ) ); ?>"><span>Курс 3 дня</span><em>от 24 900 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-zapoy-5days' ) ); ?>"><span>Курс 5 дней</span><em>от 39 900 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-zapoy-7days' ) ); ?>"><span>Курс 7 дней</span><em>от 54 900 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-zapoy' ) ); ?>"><span>Вывод из запоя</span><em>от 2 500 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-alcohol-hangover' ) ); ?>"><span>Капельница от похмелья</span><em>от 2 500 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-alcohol-home' ) ); ?>"><span>Лечение на дому</span><em>от 5 600 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-detox' ) ); ?>"><span>Детокс 24/7</span><em>от 8 900 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-visit' ) ); ?>"><span>Выезд нарколога</span><em>от 15 000 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-sober' ) ); ?>"><span>Частный вытрезвитель</span><em>от 6 900 ₽</em></a></div>
-            </div>
+          <div class="offer-prices">
+            <div class="offer-prices__list"><div class="offer-price"><span>Вывод из запоя 1 день</span><em>от 8 900 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-zapoy-1day' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Курс 3 дня</span><em>от 24 900 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-zapoy-3days' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Курс 5 дней</span><em>от 39 900 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-zapoy-5days' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Курс 7 дней</span><em>от 54 900 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-zapoy-7days' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Вывод из запоя</span><em>от 1 300 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-zapoy' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Капельница от похмелья</span><em>от 2 500 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-alcohol-hangover' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Лечение на дому</span><em>от 5 600 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-alcohol-home' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Детокс 24/7</span><em>от 8 900 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-detox' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Выезд нарколога</span><em>от 700 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-visit' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Частный вытрезвитель</span><em>от 6 900 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-sober' ) ); ?>">Перейти</a></div></div>
           </div>
         </article>
         <article class="offer" data-offer data-offer-group="alcohol" data-reveal data-tilt data-delay="60">
@@ -46,19 +38,11 @@ $l = trim( (string) ( $b['lead'] ?? '' ) );
           </a>
           <div class="offer__foot">
             <b>от 1 380 ₽</b>
-            <div class="offer__actions">
-              <button type="button" class="offer__dirs" data-offer-dirs aria-expanded="false">Лечение</button>
-              <a class="offer__cta" href="<?php echo esc_url( alba_city_url( 'service-alcohol' ) ); ?>">Подробнее</a>
+            <div class="offer__actions"><a class="offer__cta" href="<?php echo esc_url( alba_city_url( 'service-alcohol' ) ); ?>">Подробнее</a>
             </div>
           </div>
-          <div class="offer-dirs" data-offer-panel hidden>
-            <div class="offer-dirs__panel">
-              <div class="offer-dirs__head">
-                <strong>Лечение</strong>
-                <button type="button" class="offer-dirs__close" data-offer-dirs-close aria-label="Закрыть">×</button>
-              </div>
-              <div class="offer-dirs__list"><a href="<?php echo esc_url( alba_city_url( 'service-alcohol' ) ); ?>"><span>Лечение алкоголизма</span><em>от 5 600 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-alcohol-women' ) ); ?>"><span>Женский алкоголизм</span><em>от 5 600 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-alcohol-men' ) ); ?>"><span>Мужской алкоголизм</span><em>от 5 600 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-alcohol-beer' ) ); ?>"><span>Пивной алкоголизм</span><em>от 5 600 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-alcohol-wine' ) ); ?>"><span>Винный алкоголизм</span><em>от 5 600 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-alcohol-elderly' ) ); ?>"><span>Старческий алкоголизм</span><em>от 6 900 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-code' ) ); ?>"><span>Кодирование</span><em>от 7 700 ₽</em></a></div>
-            </div>
+          <div class="offer-prices">
+            <div class="offer-prices__list"><div class="offer-price"><span>Лечение алкоголизма</span><em>от 5 600 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-alcohol' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Лечение женского алкоголизма</span><em>от 5 600 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-alcohol-women' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Лечение мужского алкоголизма</span><em>от 5 600 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-alcohol-men' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Лечение пивного алкоголизма</span><em>от 5 600 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-alcohol-beer' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Лечение винного алкоголизма</span><em>от 5 600 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-alcohol-wine' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Лечение старческого алкоголизма</span><em>от 6 900 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-alcohol-elderly' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Кодирование</span><em>от 7 700 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-code' ) ); ?>">Перейти</a></div></div>
           </div>
         </article>
         <article class="offer" data-offer data-offer-group="code" data-reveal data-tilt data-delay="80">
@@ -70,19 +54,11 @@ $l = trim( (string) ( $b['lead'] ?? '' ) );
           </a>
           <div class="offer__foot">
             <b>от 1 720 ₽</b>
-            <div class="offer__actions">
-              <button type="button" class="offer__dirs" data-offer-dirs aria-expanded="false">Лечение</button>
-              <a class="offer__cta" href="<?php echo esc_url( alba_city_url( 'service-code' ) ); ?>">Подробнее</a>
+            <div class="offer__actions"><a class="offer__cta" href="<?php echo esc_url( alba_city_url( 'service-code' ) ); ?>">Подробнее</a>
             </div>
           </div>
-          <div class="offer-dirs" data-offer-panel hidden>
-            <div class="offer-dirs__panel">
-              <div class="offer-dirs__head">
-                <strong>Лечение</strong>
-                <button type="button" class="offer-dirs__close" data-offer-dirs-close aria-label="Закрыть">×</button>
-              </div>
-              <div class="offer-dirs__list"><a href="<?php echo esc_url( alba_city_url( 'service-code' ) ); ?>"><span>Кодирование</span><em>от 7 700 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-code-torpedo' ) ); ?>"><span>Торпедо</span><em>от 9 300 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-code-esperal' ) ); ?>"><span>Эспераль</span><em>от 7 700 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-code-double' ) ); ?>"><span>Двойной блок</span><em>от 8 700 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-code-dovzhenko' ) ); ?>"><span>Метод Довженко</span><em>от 9 700 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-code-vivitrol' ) ); ?>"><span>Вивитрол</span><em>от 28 000 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-decode' ) ); ?>"><span>Раскодирование</span><em>от 5 600 ₽</em></a></div>
-            </div>
+          <div class="offer-prices">
+            <div class="offer-prices__list"><div class="offer-price"><span>Кодирование</span><em>от 7 700 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-code' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Торпедо</span><em>от 9 300 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-code-torpedo' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Эспераль</span><em>от 7 700 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-code-esperal' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Двойной блок</span><em>от 8 700 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-code-double' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Метод Довженко</span><em>от 9 700 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-code-dovzhenko' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Вивитрол</span><em>от 28 000 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-code-vivitrol' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Раскодирование</span><em>от 5 600 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-decode' ) ); ?>">Перейти</a></div></div>
           </div>
         </article>
         <article class="offer" data-offer data-offer-group="visit" data-reveal data-tilt data-delay="100">
@@ -93,20 +69,12 @@ $l = trim( (string) ( $b['lead'] ?? '' ) );
             <ul class="offer__feats"><li>Выезд от 40 минут</li><li>Анонимно, без уведомлений</li><li>Капельница и осмотр на месте</li></ul>
           </a>
           <div class="offer__foot">
-            <b>от 15 000 ₽</b>
-            <div class="offer__actions">
-              <button type="button" class="offer__dirs" data-offer-dirs aria-expanded="false">Лечение</button>
-              <a class="offer__cta" href="<?php echo esc_url( alba_city_url( 'service-visit' ) ); ?>">Подробнее</a>
+            <b>от 700 ₽</b>
+            <div class="offer__actions"><a class="offer__cta" href="<?php echo esc_url( alba_city_url( 'service-visit' ) ); ?>">Подробнее</a>
             </div>
           </div>
-          <div class="offer-dirs" data-offer-panel hidden>
-            <div class="offer-dirs__panel">
-              <div class="offer-dirs__head">
-                <strong>Лечение</strong>
-                <button type="button" class="offer-dirs__close" data-offer-dirs-close aria-label="Закрыть">×</button>
-              </div>
-              <div class="offer-dirs__list"><a href="<?php echo esc_url( alba_city_url( 'service-visit' ) ); ?>"><span>Вызов нарколога</span><em>от 15 000 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-zapoy' ) ); ?>"><span>Вывод из запоя</span><em>от 2 500 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-ambulance' ) ); ?>"><span>Наркологическая скорая</span><em>от 12 000 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-detox' ) ); ?>"><span>Детокс</span><em>от 8 900 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-consult' ) ); ?>"><span>Консультация</span><em>0 ₽</em></a></div>
-            </div>
+          <div class="offer-prices">
+            <div class="offer-prices__list"><div class="offer-price"><span>Вызов нарколога</span><em>от 700 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-visit' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Вывод из запоя</span><em>от 1 300 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-zapoy' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Наркологическая скорая</span><em>от 1 450 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-ambulance' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Детокс</span><em>от 8 900 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-detox' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Консультация</span><em>0 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-consult' ) ); ?>">Перейти</a></div></div>
           </div>
         </article>
         <article class="offer" data-offer data-offer-group="drugs" data-reveal data-tilt>
@@ -118,19 +86,11 @@ $l = trim( (string) ( $b['lead'] ?? '' ) );
           </a>
           <div class="offer__foot">
             <b>от 18 900 ₽</b>
-            <div class="offer__actions">
-              <button type="button" class="offer__dirs" data-offer-dirs aria-expanded="false">Лечение</button>
-              <a class="offer__cta" href="<?php echo esc_url( alba_city_url( 'service-drugs' ) ); ?>">Подробнее</a>
+            <div class="offer__actions"><a class="offer__cta" href="<?php echo esc_url( alba_city_url( 'service-drugs' ) ); ?>">Подробнее</a>
             </div>
           </div>
-          <div class="offer-dirs" data-offer-panel hidden>
-            <div class="offer-dirs__panel">
-              <div class="offer-dirs__head">
-                <strong>Лечение</strong>
-                <button type="button" class="offer-dirs__close" data-offer-dirs-close aria-label="Закрыть">×</button>
-              </div>
-              <div class="offer-dirs__list"><a href="<?php echo esc_url( alba_city_url( 'service-drugs' ) ); ?>"><span>Лечение наркомании</span><em>от 18 900 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-withdrawal' ) ); ?>"><span>Снятие ломки</span><em>от 12 000 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-ubod' ) ); ?>"><span>УБОД</span><em>от 45 000 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-drugs-salts' ) ); ?>"><span>Соли</span><em>от 18 900 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-drugs-spice' ) ); ?>"><span>Спайсы</span><em>от 18 900 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-drugs-mephedrone' ) ); ?>"><span>Мефедрон</span><em>от 18 900 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-drugs-heroin' ) ); ?>"><span>Героин</span><em>от 22 000 ₽</em></a></div>
-            </div>
+          <div class="offer-prices">
+            <div class="offer-prices__list"><div class="offer-price"><span>Лечение наркомании</span><em>от 18 900 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-drugs' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Снятие ломки</span><em>от 12 000 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-withdrawal' ) ); ?>">Перейти</a></div><div class="offer-price"><span>УБОД</span><em>от 45 000 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-ubod' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Лечение от солей</span><em>от 18 900 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-drugs-salts' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Лечение от спайсов</span><em>от 18 900 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-drugs-spice' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Лечение от мефедрона</span><em>от 18 900 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-drugs-mephedrone' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Лечение от героина</span><em>от 22 000 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-drugs-heroin' ) ); ?>">Перейти</a></div></div>
           </div>
         </article>
         <article class="offer" data-offer data-offer-group="gambling" data-reveal data-tilt data-delay="60">
@@ -142,19 +102,11 @@ $l = trim( (string) ( $b['lead'] ?? '' ) );
           </a>
           <div class="offer__foot">
             <b>от 12 000 ₽</b>
-            <div class="offer__actions">
-              <button type="button" class="offer__dirs" data-offer-dirs aria-expanded="false">Лечение</button>
-              <a class="offer__cta" href="<?php echo esc_url( alba_city_url( 'service-gambling' ) ); ?>">Подробнее</a>
+            <div class="offer__actions"><a class="offer__cta" href="<?php echo esc_url( alba_city_url( 'service-gambling' ) ); ?>">Подробнее</a>
             </div>
           </div>
-          <div class="offer-dirs" data-offer-panel hidden>
-            <div class="offer-dirs__panel">
-              <div class="offer-dirs__head">
-                <strong>Лечение</strong>
-                <button type="button" class="offer-dirs__close" data-offer-dirs-close aria-label="Закрыть">×</button>
-              </div>
-              <div class="offer-dirs__list"><a href="<?php echo esc_url( alba_city_url( 'service-gambling' ) ); ?>"><span>Игровая зависимость</span><em>от 12 000 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-betting' ) ); ?>"><span>Ставки на спорт</span><em>от 12 000 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-family' ) ); ?>"><span>Семейная программа</span><em>от 12 000 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-psy-therapist' ) ); ?>"><span>Психотерапевт</span><em>от 4 500 ₽</em></a></div>
-            </div>
+          <div class="offer-prices">
+            <div class="offer-prices__list"><div class="offer-price"><span>Лечение игровой зависимости</span><em>от 12 000 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-gambling' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Лечение от ставок на спорт</span><em>от 12 000 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-betting' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Семейная программа</span><em>от 12 000 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-family' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Психотерапевт</span><em>от 4 500 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-psy-therapist' ) ); ?>">Перейти</a></div></div>
           </div>
         </article>
         <article class="offer" data-offer data-offer-group="rehab" data-reveal data-tilt data-delay="80">
@@ -166,19 +118,11 @@ $l = trim( (string) ( $b['lead'] ?? '' ) );
           </a>
           <div class="offer__foot">
             <b>от 210 000 ₽</b>
-            <div class="offer__actions">
-              <button type="button" class="offer__dirs" data-offer-dirs aria-expanded="false">Лечение</button>
-              <a class="offer__cta" href="<?php echo esc_url( alba_city_url( 'service-rehab' ) ); ?>">Подробнее</a>
+            <div class="offer__actions"><a class="offer__cta" href="<?php echo esc_url( alba_city_url( 'service-rehab' ) ); ?>">Подробнее</a>
             </div>
           </div>
-          <div class="offer-dirs" data-offer-panel hidden>
-            <div class="offer-dirs__panel">
-              <div class="offer-dirs__head">
-                <strong>Лечение</strong>
-                <button type="button" class="offer-dirs__close" data-offer-dirs-close aria-label="Закрыть">×</button>
-              </div>
-              <div class="offer-dirs__list"><a href="<?php echo esc_url( alba_city_url( 'service-rehab' ) ); ?>"><span>Реабилитация</span><em>от 210 000 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-rehab-12' ) ); ?>"><span>12 шагов</span><em>от 210 000 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-rehab-daytop' ) ); ?>"><span>Day Top</span><em>от 210 000 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-rehab-alcohol' ) ); ?>"><span>Реабилитация алкоголизм</span><em>от 210 000 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-sober' ) ); ?>"><span>Поддержка трезвости</span><em>от 6 900 ₽</em></a></div>
-            </div>
+          <div class="offer-prices">
+            <div class="offer-prices__list"><div class="offer-price"><span>Реабилитация</span><em>от 210 000 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-rehab' ) ); ?>">Перейти</a></div><div class="offer-price"><span>12 шагов</span><em>от 210 000 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-rehab-12' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Day Top</span><em>от 210 000 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-rehab-daytop' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Лечение алкоголизма, реабилитация</span><em>от 210 000 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-rehab-alcohol' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Поддержка трезвости</span><em>от 6 900 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-sober' ) ); ?>">Перейти</a></div></div>
           </div>
         </article>
         <article class="offer" data-offer data-offer-group="help" data-reveal data-tilt data-delay="100">
@@ -190,19 +134,11 @@ $l = trim( (string) ( $b['lead'] ?? '' ) );
           </a>
           <div class="offer__foot">
             <b>от 2 500 ₽</b>
-            <div class="offer__actions">
-              <button type="button" class="offer__dirs" data-offer-dirs aria-expanded="false">Лечение</button>
-              <a class="offer__cta" href="<?php echo esc_url( alba_city_url( 'service-help' ) ); ?>">Подробнее</a>
+            <div class="offer__actions"><a class="offer__cta" href="<?php echo esc_url( alba_city_url( 'service-help' ) ); ?>">Подробнее</a>
             </div>
           </div>
-          <div class="offer-dirs" data-offer-panel hidden>
-            <div class="offer-dirs__panel">
-              <div class="offer-dirs__head">
-                <strong>Лечение</strong>
-                <button type="button" class="offer-dirs__close" data-offer-dirs-close aria-label="Закрыть">×</button>
-              </div>
-              <div class="offer-dirs__list"><a href="<?php echo esc_url( alba_city_url( 'service-help' ) ); ?>"><span>Наркологическая помощь</span><em>от 2 500 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-ambulance' ) ); ?>"><span>Скорая</span><em>от 12 000 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-withdrawal' ) ); ?>"><span>Ломка</span><em>от 12 000 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-drugtest' ) ); ?>"><span>Наркотест</span><em>от 3 500 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-toxicologist' ) ); ?>"><span>Токсиколог</span><em>от 4 500 ₽</em></a><a href="<?php echo esc_url( alba_city_url( 'service-psychiatry' ) ); ?>"><span>Психиатрия</span><em>от 4 500 ₽</em></a></div>
-            </div>
+          <div class="offer-prices">
+            <div class="offer-prices__list"><div class="offer-price"><span>Наркологическая помощь</span><em>от 2 500 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-help' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Скорая</span><em>от 1 450 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-ambulance' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Лечение ломки</span><em>от 12 000 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-withdrawal' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Наркотест</span><em>от 3 500 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-drugtest' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Токсиколог</span><em>от 4 500 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-toxicologist' ) ); ?>">Перейти</a></div><div class="offer-price"><span>Психиатрия</span><em>от 4 500 ₽</em><a href="<?php echo esc_url( alba_city_url( 'service-psychiatry' ) ); ?>">Перейти</a></div></div>
           </div>
         </article>
       

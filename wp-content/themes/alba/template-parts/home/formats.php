@@ -106,5 +106,5 @@ $l = trim( (string) ( $b['lead'] ?? '' ) );
           <a class="btn btn--line" href="<?php echo esc_url( alba_city_url( 'service-psy-chronic-care' ) ); ?>">Подробнее <span class="arr"><svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
         </article>
       </div>
-      <p class="home-formats__more"><a class="more" href="<?php echo esc_url( alba_city_url( 'service-psychiatry' ) ); ?>">Все форматы психиатрии</a></p>
+      <p class="home-formats__more"><a class="btn btn--blue" href="<?php echo esc_url( alba_city_url( 'service-psychiatry' ) ); ?>">Все форматы психиатрии <?php echo alba_arr(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a></p>
     </section>

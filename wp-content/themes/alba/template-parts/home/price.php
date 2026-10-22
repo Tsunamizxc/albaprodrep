@@ -18,7 +18,7 @@ $l = trim( (string) ( $b['lead'] ?? '' ) );
             <tbody>
               <tr><td><a href="<?php echo esc_url( alba_city_url( 'service-alcohol' ) ); ?>">Лечение алкоголизма, старт</a></td><td>от 18 900 ₽</td></tr>
               <tr><td><a href="<?php echo esc_url( alba_city_url( 'service-zapoy' ) ); ?>">Капельница на дому</a></td><td>9 900 ₽</td></tr>
-              <tr><td><a href="<?php echo esc_url( alba_city_url( 'service-zapoy' ) ); ?>">Вывод из запоя дома</a></td><td>14 900 ₽</td></tr>
+              <tr><td><a href="<?php echo esc_url( alba_city_url( 'service-zapoy' ) ); ?>">Вывод из запоя дома</a></td><td>1 300 ₽</td></tr>
               <tr><td><a href="<?php echo esc_url( alba_city_url( 'service-alcohol-hangover' ) ); ?>">Капельница от похмелья</a></td><td>9 900 ₽</td></tr>
             </tbody>
           </table>

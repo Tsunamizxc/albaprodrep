@@ -17,19 +17,23 @@ $city = alba_get_current_city();
           <h4>Клиника</h4>
           <ul>
             <li><a href="<?php echo esc_url( alba_city_url( 'about' ) ); ?>">О нас</a></li>
-            <li><a href="<?php echo esc_url( alba_city_url( 'gallery' ) ); ?>">Галерея</a></li>
-            <li><a href="<?php echo esc_url( alba_city_url( 'prices' ) ); ?>">Цены</a></li>
             <li><a href="<?php echo esc_url( alba_city_url( 'doctors' ) ); ?>">Врачи</a></li>
+            <li><a href="<?php echo esc_url( alba_city_url( 'licenses' ) ); ?>">Лицензии</a></li>
+            <li><a href="<?php echo esc_url( alba_city_url( 'gallery' ) ); ?>">Галерея</a></li>
+            <li><a href="<?php echo esc_url( alba_city_url( 'reviews' ) ); ?>">Отзывы</a></li>
             <li><a href="<?php echo esc_url( alba_city_url( 'articles' ) ); ?>">Статьи</a></li>
+            <li><a href="<?php echo esc_url( alba_city_url( 'prices' ) ); ?>">Цены</a></li>
+            <li><a href="<?php echo esc_url( alba_city_url( 'links' ) ); ?>">Полезные ссылки</a></li>
+            <li><a href="<?php echo esc_url( alba_city_url( 'sitemap' ) ); ?>">Карта сайта</a></li>
           </ul>
         </div>
         <div>
           <h4>Программы</h4>
           <ul>
             <li><a href="<?php echo esc_url( alba_city_url( 'programs' ) ); ?>">Каталог</a></li>
-            <li><a href="<?php echo esc_url( home_url( '/' . $city['slug'] . '/service/zapoy/' ) ); ?>">Запой и капельница</a></li>
-            <li><a href="<?php echo esc_url( home_url( '/' . $city['slug'] . '/service/detox/' ) ); ?>">Детокс</a></li>
-            <li><a href="<?php echo esc_url( home_url( '/' . $city['slug'] . '/service/psychiatry/' ) ); ?>">Психиатрия</a></li>
+            <li><a href="<?php echo esc_url( function_exists( 'alba_service_permalink' ) ? alba_service_permalink( 'service-zapoy' ) : alba_city_url( 'service-zapoy' ) ); ?>">Запой и капельница</a></li>
+            <li><a href="<?php echo esc_url( function_exists( 'alba_service_permalink' ) ? alba_service_permalink( 'service-detox' ) : alba_city_url( 'service-detox' ) ); ?>">Детокс</a></li>
+            <li><a href="<?php echo esc_url( function_exists( 'alba_service_permalink' ) ? alba_service_permalink( 'service-psychiatry' ) : alba_city_url( 'service-psychiatry' ) ); ?>">Психиатрия</a></li>
           </ul>
         </div>
         <div>

@@ -1559,19 +1559,43 @@ a.btn[href^="tel:"] {
 
 @media (max-width: 1100px) {
   .dirs__bar {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+    padding: 4px 0;
+  }
+
+  .dirs__btn {
+    min-height: 32px;
+    padding: 4px 8px;
+    border-radius: 10px;
+    gap: 4px;
+    font-size: 11.5px;
+    font-weight: 700;
+    line-height: 1.15;
+    box-shadow: none;
+  }
+
+  .dirs__bar.is-stuck {
+    padding: 3px 0;
+  }
+
+  .dirs__bar.is-stuck .dirs__btn {
+    min-height: 28px;
+    padding: 3px 8px;
+  }
+}
+
+@media (max-width: 860px) {
+  .dirs__bar {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 900px) {
-  .dirs__bar {
-    grid-template-columns: 1fr;
+  .dirs__menu {
+    max-height: min(70vh, 480px);
+    overflow-y: auto;
   }
-
-.dirs__menu {
-  max-height: min(70vh, 480px);
-  overflow-y: auto;
-}
 }
 
 @media (max-width: 720px) {
@@ -1588,9 +1612,16 @@ a.btn[href^="tel:"] {
     position: static;
     top: auto;
     z-index: 6;
+    grid-template-columns: 1fr;
     margin-bottom: 12px;
     padding: 0;
     box-shadow: none;
+  }
+
+  .dirs__btn {
+    min-height: 44px;
+    padding: 10px 14px;
+    font-size: 14px;
   }
 
   .dirs__bar::before,
@@ -4947,11 +4978,137 @@ body:has(.mnav.is-open) .sticky-lead {
 
 .offer__actions {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 8px;
   width: 100%;
   margin-left: 0;
   min-width: 0;
+}
+
+.offer-prices {
+  margin: 14px 0 4px;
+  min-width: 0;
+}
+
+.offer-prices__list {
+  display: grid;
+  gap: 0;
+  max-height: 168px;
+  overflow: auto;
+  padding-right: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #6b97ff rgba(79, 132, 255, 0.1);
+}
+
+.offer-prices__list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.offer-prices__list::-webkit-scrollbar-track {
+  margin: 6px 0;
+  background: rgba(79, 132, 255, 0.1);
+  border-radius: 999px;
+}
+
+.offer-prices__list::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8eb0ff, #3b6ff0);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+.offer-prices__list::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #6b97ff, #2f5fe0);
+  background-clip: padding-box;
+}
+
+.offer:nth-child(4) .offer-prices__list {
+  scrollbar-color: rgba(255, 255, 255, 0.85) rgba(255, 255, 255, 0.16);
+}
+
+.offer:nth-child(4) .offer-prices__list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.offer:nth-child(4) .offer-prices__list::-webkit-scrollbar-thumb,
+.offer:nth-child(4) .offer-prices__list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.88);
+  background-clip: padding-box;
+}
+
+.offer-price {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "name go"
+    "price go";
+  align-items: center;
+  gap: 1px 8px;
+  padding: 7px 0;
+  border-top: 1px solid rgba(79, 132, 255, 0.14);
+}
+
+.offer-price span {
+  grid-area: name;
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  text-transform: none;
+  color: var(--ink);
+  line-height: 1.25;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.offer-price em {
+  grid-area: price;
+  font-style: normal;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--blue-deep);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.offer-price a {
+  grid-area: go;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.offer-price a:hover {
+  background: var(--blue-deep);
+  color: #fff;
+}
+
+.offer:nth-child(4) .offer-price {
+  border-top-color: rgba(255, 255, 255, 0.18);
+}
+
+.offer:nth-child(4) .offer-price span,
+.offer:nth-child(4) .offer-price em {
+  color: #fff;
+}
+
+.offer:nth-child(4) .offer-price a {
+  background: #fff;
+  color: var(--blue-deep);
 }
 
 .offer__dirs {
@@ -8858,10 +9015,17 @@ body.is-hidden-tab .marquee__track {
 }
 
 .svc-sticky__card h3 {
+  display: block;
+  max-width: 100%;
   margin: 0 0 8px;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 800;
+  line-height: 1.3;
   letter-spacing: -0.02em;
+  text-transform: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  color: var(--ink);
 }
 
 .svc-sticky__card > p {

@@ -584,9 +584,9 @@ function alba_catalog_card_from_post( $post_id ) {
 
 	$slug = get_post_field( 'post_name', $post_id );
 	$icon = alba_catalog_icon_for_post( $post_id, $dir, $slug );
-	$type = get_post_type( $post_id );
-	$city = alba_get_current_city()['slug'];
-	$url  = home_url( '/' . $city . '/' . ( 'program' === $type ? 'program' : 'service' ) . '/' . $slug . '/' );
+	$url  = function_exists( 'alba_service_pretty_url' )
+		? alba_service_pretty_url( $post_id )
+		: home_url( '/' . alba_get_current_city()['slug'] . '/service/' . $slug . '/' );
 
 	return array(
 		'badge'  => $badge,

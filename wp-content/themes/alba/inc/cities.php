@@ -313,12 +313,17 @@ function alba_city_url( $path = '', $city_slug = '' ) {
 	$path      = ltrim( (string) $path, '/' );
 	$path      = preg_replace( '/\.(html?)$/i', '', $path );
 
-	// Legacy stems → correct CPT bucket (program vs service).
+	// Legacy stems → pretty translit paths.
 	if ( preg_match( '/^(service|program)-(.+)$/i', $path, $m ) ) {
-		$stem  = $m[2];
-		$post  = get_page_by_path( $stem, OBJECT, array( 'service', 'program' ) );
-		$bucket = $post ? $post->post_type : ( preg_match( '/^zapoy-\d/i', $stem ) ? 'program' : strtolower( $m[1] ) );
-		return trailingslashit( home_url( '/' . $city_slug . '/' . $bucket . '/' . $stem ) );
+		$stem = $m[2];
+		$post = get_page_by_path( $stem, OBJECT, array( 'service', 'program' ) );
+		if ( $post && function_exists( 'alba_service_pretty_url' ) ) {
+			return alba_service_pretty_url( $post->ID, $city_slug );
+		}
+		if ( function_exists( 'alba_service_permalink' ) ) {
+			return alba_service_permalink( 'service-' . $stem );
+		}
+		return trailingslashit( home_url( '/' . $city_slug . '/' . $stem ) );
 	}
 	if ( preg_match( '/^doctor-(.+)$/i', $path, $m ) ) {
 		$path = 'doctor/' . $m[1];
@@ -330,8 +335,8 @@ function alba_city_url( $path = '', $city_slug = '' ) {
 	if ( ! $path ) {
 		return untrailingslashit( $base ) . '/';
 	}
-	// Keep trailing slash for CPT-like paths.
-	if ( preg_match( '#^(service|program|doctor|article)/#', $path ) ) {
+	// Keep trailing slash for doctor/article and multi-segment SEO paths.
+	if ( preg_match( '#^(doctor|article)/#', $path ) || false !== strpos( $path, '/' ) ) {
 		return $base . trailingslashit( $path );
 	}
 	return $base . $path;

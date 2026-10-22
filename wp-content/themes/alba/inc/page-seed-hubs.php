@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Curated ACF seeds for hub pages (about, links, licenses, reviews, methods, sitemap).
  *

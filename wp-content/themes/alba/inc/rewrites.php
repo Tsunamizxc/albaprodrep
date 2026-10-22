@@ -1,6 +1,6 @@
 <?php
 /**
- * City URL rewrites: /{city}/about, /{city}/service/zapoy
+ * City URL rewrites: /{city}/about, /{city}/vyvod-iz-zapoya/...
  *
  * @package Alba
  */
@@ -13,6 +13,9 @@ add_filter(
 	'query_vars',
 	function ( $vars ) {
 		$vars[] = 'alba_city';
+		$vars[] = 'alba_path';
+		$vars[] = 'alba_legacy_cpt';
+		$vars[] = 'alba_seo_redirect';
 		return $vars;
 	}
 );
@@ -27,22 +30,74 @@ add_action(
 		$group = implode( '|', array_map( 'preg_quote', $slugs ) );
 
 		// Broader rules first (each 'top' prepends — last registered wins).
-		// Nested pages /omsk/parent/child
-		add_rewrite_rule( '^(' . $group . ')/(.+?)/?$', 'index.php?alba_city=$matches[1]&pagename=$matches[2]', 'top' );
-		// /omsk/page-slug/
-		add_rewrite_rule( '^(' . $group . ')/([^/]+)/?$', 'index.php?alba_city=$matches[1]&pagename=$matches[2]', 'top' );
+		// Generic /{city}/{path}/ — pages + SEO services (resolved in request filter).
+		add_rewrite_rule( '^(' . $group . ')/(.+?)/?$', 'index.php?alba_city=$matches[1]&alba_path=$matches[2]', 'top' );
 		// /omsk/
 		add_rewrite_rule( '^(' . $group . ')/?$', 'index.php?alba_city=$matches[1]', 'top' );
-		// CPT + article — registered last so they beat the catch-all above.
-		add_rewrite_rule( '^(' . $group . ')/service/([^/]+)/?$', 'index.php?alba_city=$matches[1]&service=$matches[2]', 'top' );
-		add_rewrite_rule( '^(' . $group . ')/program/([^/]+)/?$', 'index.php?alba_city=$matches[1]&program=$matches[2]', 'top' );
-		// Safety: plural /programs/slug → program CPT (catalog page is /programs/, singles are /program/).
-		add_rewrite_rule( '^(' . $group . ')/programs/([^/]+)/?$', 'index.php?alba_city=$matches[1]&program=$matches[2]', 'top' );
+		// Legacy CPT prefixes + doctor/article — registered last so they beat the catch-all.
+		add_rewrite_rule( '^(' . $group . ')/service/([^/]+)/?$', 'index.php?alba_city=$matches[1]&service=$matches[2]&alba_legacy_cpt=1', 'top' );
+		add_rewrite_rule( '^(' . $group . ')/program/([^/]+)/?$', 'index.php?alba_city=$matches[1]&program=$matches[2]&alba_legacy_cpt=1', 'top' );
+		add_rewrite_rule( '^(' . $group . ')/programs/([^/]+)/?$', 'index.php?alba_city=$matches[1]&program=$matches[2]&alba_legacy_cpt=1', 'top' );
 		add_rewrite_rule( '^(' . $group . ')/doctor/([^/]+)/?$', 'index.php?alba_city=$matches[1]&doctor=$matches[2]', 'top' );
 		add_rewrite_rule( '^(' . $group . ')/article/([^/]+)/?$', 'index.php?alba_city=$matches[1]&name=$matches[2]', 'top' );
 	},
 	20
 );
+
+/**
+ * Resolve /{city}/{path}/ into a page or SEO service/program.
+ *
+ * @param array $qv Query vars.
+ * @return array
+ */
+function alba_resolve_city_path_request( $qv ) {
+	if ( empty( $qv['alba_path'] ) ) {
+		return $qv;
+	}
+
+	$path = trim( (string) $qv['alba_path'], '/' );
+	unset( $qv['alba_path'] );
+
+	if ( '' === $path ) {
+		return $qv;
+	}
+
+	// Alias → mark for 301 in template_redirect.
+	$alias_to = function_exists( 'alba_seo_resolve_alias' ) ? alba_seo_resolve_alias( $path ) : '';
+	if ( $alias_to && $alias_to !== $path ) {
+		$qv['alba_seo_redirect'] = $alias_to;
+		$path                    = $alias_to;
+	}
+
+	$root = strtok( $path, '/' );
+	$reserved = function_exists( 'alba_seo_reserved_roots' ) ? alba_seo_reserved_roots() : array();
+
+	// WordPress pages (single or nested pagename).
+	$page = get_page_by_path( $path );
+	if ( $page && 'page' === $page->post_type ) {
+		$qv['pagename'] = $path;
+		return $qv;
+	}
+	if ( in_array( $root, $reserved, true ) && 'service' !== $root && 'program' !== $root && 'programs' !== $root ) {
+		$qv['pagename'] = $path;
+		return $qv;
+	}
+
+	// SEO service/program path.
+	$post = function_exists( 'alba_find_by_seo_path' ) ? alba_find_by_seo_path( $path ) : null;
+	if ( $post ) {
+		$qv[ $post->post_type ] = $post->post_name;
+		$qv['name']             = $post->post_name;
+		$qv['post_type']        = $post->post_type;
+		return $qv;
+	}
+
+	// Fallback: treat as page (may 404).
+	$qv['pagename'] = $path;
+	return $qv;
+}
+
+add_filter( 'request', 'alba_resolve_city_path_request', 8 );
 
 add_action(
 	'template_redirect',
@@ -89,17 +144,21 @@ function alba_legacy_stem_url( $stem, $city_slug = '' ) {
 	if ( 0 === strpos( $stem, 'service-' ) || 0 === strpos( $stem, 'program-' ) ) {
 		if ( function_exists( 'alba_service_permalink' ) ) {
 			$url = alba_service_permalink( $stem );
-			// Ensure city prefix when permalink helper returned absolute without city in admin context.
 			if ( $city_slug && false === strpos( $url, '/' . $city_slug . '/' ) ) {
-				$bucket = preg_match( '/^program-/i', $stem ) || preg_match( '/zapoy-\d/i', $stem ) ? 'program' : 'service';
-				$slug   = preg_replace( '/^(service|program)-/', '', $stem );
-				return home_url( '/' . $city_slug . '/' . $bucket . '/' . $slug . '/' );
+				$slug = preg_replace( '/^(service|program)-/', '', $stem );
+				$post = get_page_by_path( $slug, OBJECT, array( 'service', 'program' ) );
+				if ( $post && function_exists( 'alba_service_pretty_url' ) ) {
+					return alba_service_pretty_url( $post->ID, $city_slug );
+				}
 			}
 			return $url;
 		}
-		$bucket = 0 === strpos( $stem, 'program-' ) ? 'program' : 'service';
-		$slug   = preg_replace( '/^(service|program)-/', '', $stem );
-		return home_url( '/' . ( $city_slug ?: alba_get_current_city()['slug'] ) . '/' . $bucket . '/' . $slug . '/' );
+		$slug = preg_replace( '/^(service|program)-/', '', $stem );
+		$post = get_page_by_path( $slug, OBJECT, array( 'service', 'program' ) );
+		if ( $post && function_exists( 'alba_service_pretty_url' ) ) {
+			return alba_service_pretty_url( $post->ID, $city_slug ?: alba_get_current_city()['slug'] );
+		}
+		return trailingslashit( home_url( '/' . ( $city_slug ?: alba_get_current_city()['slug'] ) . '/' . $slug ) );
 	}
 	if ( 0 === strpos( $stem, 'doctor-' ) ) {
 		return home_url( '/' . ( $city_slug ?: alba_get_current_city()['slug'] ) . '/doctor/' . preg_replace( '/^doctor-/', '', $stem ) . '/' );
@@ -129,6 +188,27 @@ function alba_city_template_redirect() {
 		if ( $city && alba_get_city_by_slug( $city ) ) {
 			if ( ! isset( $_COOKIE['alba_city'] ) || $_COOKIE['alba_city'] !== $city ) {
 				setcookie( 'alba_city', $city, time() + YEAR_IN_SECONDS, COOKIEPATH ? COOKIEPATH : '/', COOKIE_DOMAIN, is_ssl(), false );
+			}
+		}
+
+		// Alias / legacy SEO path → canonical pretty URL.
+		$seo_redir = get_query_var( 'alba_seo_redirect' );
+		if ( $seo_redir && $city ) {
+			wp_safe_redirect( trailingslashit( home_url( '/' . $city . '/' . trim( (string) $seo_redir, '/' ) ) ), 301 );
+			exit;
+		}
+
+		// Old /{city}/service/{slug}/ and /{city}/program/{slug}/ → translit path.
+		if ( get_query_var( 'alba_legacy_cpt' ) && $city ) {
+			$post = null;
+			if ( get_query_var( 'service' ) ) {
+				$post = get_page_by_path( (string) get_query_var( 'service' ), OBJECT, array( 'service', 'program' ) );
+			} elseif ( get_query_var( 'program' ) ) {
+				$post = get_page_by_path( (string) get_query_var( 'program' ), OBJECT, array( 'service', 'program' ) );
+			}
+			if ( $post && function_exists( 'alba_service_pretty_url' ) ) {
+				wp_safe_redirect( alba_service_pretty_url( $post->ID, $city ), 301 );
+				exit;
 			}
 		}
 
@@ -206,7 +286,7 @@ add_action(
 		if ( ! $city ) {
 			return;
 		}
-		if ( $q->get( 'pagename' ) || $q->get( 'name' ) || $q->get( 'service' ) || $q->get( 'program' ) || $q->get( 'doctor' ) || $q->get( 'page_id' ) ) {
+		if ( $q->get( 'pagename' ) || $q->get( 'name' ) || $q->get( 'service' ) || $q->get( 'program' ) || $q->get( 'doctor' ) || $q->get( 'page_id' ) || $q->get( 'alba_path' ) || $q->get( 'alba_seo_redirect' ) ) {
 			return;
 		}
 		$front_id = (int) get_option( 'page_on_front' );
@@ -243,10 +323,19 @@ add_filter(
 
 /**
  * Prefixed permalinks when city context is active.
+ * Services/programs use translit paths without /service/ or /program/.
  */
 add_filter(
 	'post_type_link',
 	function ( $permalink, $post ) {
+		if ( ! ( $post instanceof WP_Post ) ) {
+			return $permalink;
+		}
+		if ( in_array( $post->post_type, array( 'service', 'program' ), true ) && function_exists( 'alba_service_pretty_url' ) ) {
+			$city = alba_get_current_city();
+			$slug = ! empty( $city['slug'] ) ? $city['slug'] : alba_get_default_city()['slug'];
+			return alba_service_pretty_url( $post->ID, $slug );
+		}
 		if ( is_admin() || wp_doing_ajax() ) {
 			return $permalink;
 		}

@@ -154,11 +154,30 @@ function alba_handle_lead() {
 		'created_at' => gmdate( 'c' ),
 	);
 
-	$to = alba_get_integration( 'lead_email', get_option( 'admin_email' ) );
+	$to   = alba_get_integration( 'lead_email', get_option( 'admin_email' ) );
+	$lines = array(
+		'Новая заявка с сайта клиники «Альба».',
+		'',
+		'Телефон: ' . $phone,
+		'Имя: ' . ( $name ? $name : 'не указано' ),
+		'Программа: ' . ( $program ? $program : 'не выбрана' ),
+		'Город: ' . $city['name'],
+		'Страница: ' . ( $page ? $page : 'не передана' ),
+	);
+	if ( $test_score ) {
+		$lines[] = 'Балл теста: ' . $test_score;
+	}
+	if ( $test_brief ) {
+		$lines[] = '';
+		$lines[] = 'Бриф теста:';
+		$lines[] = $test_brief;
+	}
+	$lines[] = '';
+	$lines[] = 'Время (UTC): ' . gmdate( 'Y-m-d H:i:s' );
 	wp_mail(
 		$to,
 		'Заявка с сайта — ' . $city['name'],
-		wp_json_encode( $payload, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT )
+		implode( "\n", $lines )
 	);
 
 	$crm = alba_send_crm( $payload );
@@ -250,8 +269,12 @@ add_action(
 	function () {
 		$ym = alba_get_integration( 'yandex_metrika_id' );
 		if ( $ym ) {
-			$ym = preg_replace( '/\D+/', '', $ym );
-			echo "<!-- Yandex.Metrika -->\n<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r)return;}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');ym(" . esc_js( $ym ) . ",'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});</script>\n";
+			$ym = preg_replace( '/\D+/', '', (string) $ym );
+			if ( $ym ) {
+				echo "<!-- Yandex.Metrika counter " . esc_html( $ym ) . " -->\n";
+				echo "<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');ym(" . esc_js( $ym ) . ",'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});</script>\n";
+				echo '<noscript><div><img src="' . esc_url( 'https://mc.yandex.ru/watch/' . $ym ) . '" style="position:absolute;left:-9999px" alt=""></div></noscript>' . "\n";
+			}
 		}
 		$yd = alba_get_integration( 'yandex_direct_counter' );
 		if ( $yd ) {

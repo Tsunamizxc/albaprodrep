@@ -24,6 +24,7 @@ add_action(
 		add_submenu_page( 'alba-settings', 'Города', 'Города', 'manage_options', 'alba-settings', 'alba_render_cities_page' );
 		add_submenu_page( 'alba-settings', 'Интеграции', 'Интеграции', 'manage_options', 'alba-integrations', 'alba_render_integrations_page' );
 		add_submenu_page( 'alba-settings', 'Импорт HTML', 'Импорт HTML', 'manage_options', 'alba-import', 'alba_render_import_page' );
+		add_submenu_page( 'alba-settings', 'Руководство', 'Руководство PDF', 'manage_options', 'alba-admin-guide', 'alba_render_admin_guide_page' );
 	}
 );
 
@@ -142,6 +143,45 @@ function alba_render_cities_page() {
 	</div>
 	<?php
 }
+
+function alba_admin_guide_path() {
+	return trailingslashit( ABSPATH ) . 'docs/rukovodstvo-administratora.pdf';
+}
+
+function alba_render_admin_guide_page() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	$file = alba_admin_guide_path();
+	$url  = wp_nonce_url( admin_url( 'admin-post.php?action=alba_admin_guide' ), 'alba_admin_guide' );
+	echo '<div class="wrap"><h1>Руководство администратора</h1>';
+	if ( is_readable( $file ) ) {
+		echo '<p>PDF для сотрудника клиники: города, страницы, услуги, статьи, врачи, заявки, Метрика и поля Title / Description.</p>';
+		echo '<p><a class="button button-primary" href="' . esc_url( $url ) . '">Скачать PDF</a></p>';
+	} else {
+		echo '<p>Файл руководства не найден.</p>';
+	}
+	echo '</div>';
+}
+
+add_action(
+	'admin_post_alba_admin_guide',
+	function () {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'Недостаточно прав.' );
+		}
+		check_admin_referer( 'alba_admin_guide' );
+		$file = alba_admin_guide_path();
+		if ( ! is_readable( $file ) ) {
+			wp_die( 'Файл руководства не найден.' );
+		}
+		header( 'Content-Type: application/pdf' );
+		header( 'Content-Disposition: attachment; filename="rukovodstvo-administratora-alba.pdf"' );
+		header( 'Content-Length: ' . (string) filesize( $file ) );
+		readfile( $file );
+		exit;
+	}
+);
 
 function alba_render_integrations_page() {
 	if ( ! current_user_can( 'manage_options' ) ) {
@@ -313,7 +353,7 @@ function alba_render_integrations_page() {
 				<div class="alba-int__card-head">
 					<div>
 						<h2>Яндекс</h2>
-						<p>Метрика и Direct — идентификаторы для фронта и рекламы.</p>
+						<p>Номер счётчика из кабинета Метрики. Пока поле пустое, код на сайт не выводится: подставлять чужой или выдуманный номер нельзя.</p>
 					</div>
 				</div>
 				<div class="alba-int__grid">
