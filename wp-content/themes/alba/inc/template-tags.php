@@ -64,7 +64,11 @@ function alba_fix_legacy_html( $html ) {
 				return 'href="' . esc_url( home_url( '/' . $city . '/doctor/' . $slug . '/' ) ) . $hash . '"';
 			}
 			if ( 0 === strpos( $file, 'article-' ) ) {
-				return 'href="' . esc_url( home_url( '/' . $city . '/article/' . $file . '/' ) ) . $hash . '"';
+				$post = get_page_by_path( $file, OBJECT, 'post' );
+				$url  = ( $post && function_exists( 'alba_service_pretty_url' ) )
+					? alba_service_pretty_url( $post->ID, $city )
+					: home_url( '/' . $city . '/article/' . $file . '/' );
+				return 'href="' . esc_url( $url ) . $hash . '"';
 			}
 			if ( 'index' === $file ) {
 				return 'href="' . esc_url( alba_city_url( '' ) ) . $hash . '"';
