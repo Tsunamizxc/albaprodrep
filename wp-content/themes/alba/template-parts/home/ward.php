@@ -56,6 +56,6 @@ $l = trim( (string) ( $b['lead'] ?? '' ) );
       </div>
       <div class="ward-fund__cta">
         <a class="btn btn--blue" href="#" data-open-modal>Забронировать палату <span class="arr"><svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-        <a class="btn btn--line" href="tel:+78001001212" data-city-tel>Позвонить: <span data-city-phone>8 800 100-12-12</span></a>
+        <a class="btn btn--line" href="tel:+78001013812" data-city-tel>Позвонить: <span data-city-phone>8 800 101-38-12</span></a>
       </div>
     </section>

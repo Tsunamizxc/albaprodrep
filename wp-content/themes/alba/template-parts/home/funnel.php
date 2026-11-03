@@ -31,7 +31,7 @@ $l = trim( (string) ( $b['lead'] ?? '' ) );
             <div class="form__ok"><strong>Заявка принята.</strong> Дежурный врач перезвонит.</div>
           </form>
           <div class="funnel__actions">
-            <a class="btn btn--line" href="tel:+78001001212" data-city-tel>8 800 100-12-12</a>
+            <a class="btn btn--line" href="tel:+78001013812" data-city-tel>8 800 101-38-12</a>
             <a class="btn btn--ghost funnel__ghost" href="#calc">Рассчитать стоимость</a>
           </div>
         </div>

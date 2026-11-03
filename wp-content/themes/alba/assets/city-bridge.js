@@ -49,8 +49,8 @@
 
   function applyCityDom(city) {
     if (!city) return;
-    var tel = String(city.tel || "+78001001212").replace(/\s+/g, "");
-    var phone = city.phone || "8 800 100-12-12";
+    var tel = String(city.tel || "+78001013812").replace(/\s+/g, "");
+    var phone = city.phone || "8 800 101-38-12";
     doc.querySelectorAll("[data-city-name]").forEach(function (n) { n.textContent = city.name; });
     doc.querySelectorAll("[data-city-prep]").forEach(function (n) { n.textContent = city.prep; });
     doc.querySelectorAll("[data-city-phone]").forEach(function (n) { n.textContent = phone; });

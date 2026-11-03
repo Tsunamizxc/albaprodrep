@@ -18,13 +18,13 @@ function alba_default_cities() {
 			'slug'    => 'omsk',
 			'name'    => 'Омск',
 			'prep'    => 'в Омске',
-			'phone'   => '8 800 100-12-12',
-			'tel'     => '+78001001212',
+			'phone'   => '8 800 101-38-12',
+			'tel'     => '+78001013812',
 			'address' => 'Омск, ул. Ленина, 12',
 			'extra'   => 'Отдельный вход. Трансфер по городу и области.',
 			'license' => 'ЛО-55-01-002891',
 			'map'     => 'https://yandex.ru/map-widget/v1/?ll=73.368227%2C54.989342&z=16',
-			'tg'      => 'https://t.me/+78001001212',
+			'tg'      => 'https://t.me/+78001013812',
 			'max'     => 'https://max.ru/',
 			'default' => 1,
 		),
@@ -32,13 +32,13 @@ function alba_default_cities() {
 			'slug'    => 'nsk',
 			'name'    => 'Новосибирск',
 			'prep'    => 'в Новосибирске',
-			'phone'   => '8 800 100-12-12',
-			'tel'     => '+78001001212',
+			'phone'   => '8 800 101-38-12',
+			'tel'     => '+78001013812',
 			'address' => 'Новосибирск, Красный проспект, 52',
 			'extra'   => 'Отдельный вход, закрытая парковка.',
 			'license' => 'ЛО-54-01-005412',
 			'map'     => '',
-			'tg'      => 'https://t.me/+78001001212',
+			'tg'      => 'https://t.me/+78001013812',
 			'max'     => 'https://max.ru/',
 			'default' => 0,
 		),
@@ -46,13 +46,13 @@ function alba_default_cities() {
 			'slug'    => 'tomsk',
 			'name'    => 'Томск',
 			'prep'    => 'в Томске',
-			'phone'   => '8 800 100-12-12',
-			'tel'     => '+78001001212',
+			'phone'   => '8 800 101-38-12',
+			'tel'     => '+78001013812',
 			'address' => 'Томск, пр. Ленина, 54',
 			'extra'   => 'Тихий двор, трансфер по городу.',
 			'license' => 'ЛО-70-01-001904',
 			'map'     => '',
-			'tg'      => 'https://t.me/+78001001212',
+			'tg'      => 'https://t.me/+78001013812',
 			'max'     => 'https://max.ru/',
 			'default' => 0,
 		),
@@ -60,13 +60,13 @@ function alba_default_cities() {
 			'slug'    => 'tyumen',
 			'name'    => 'Тюмень',
 			'prep'    => 'в Тюмени',
-			'phone'   => '8 800 100-12-12',
-			'tel'     => '+78001001212',
+			'phone'   => '8 800 101-38-12',
+			'tel'     => '+78001013812',
 			'address' => 'Тюмень, ул. Республики, 83',
 			'extra'   => 'Центр, анонимный подъезд.',
 			'license' => 'ЛО-72-01-003215',
 			'map'     => '',
-			'tg'      => 'https://t.me/+78001001212',
+			'tg'      => 'https://t.me/+78001013812',
 			'max'     => 'https://max.ru/',
 			'default' => 0,
 		),
@@ -74,13 +74,13 @@ function alba_default_cities() {
 			'slug'    => 'barnaul',
 			'name'    => 'Барнаул',
 			'prep'    => 'в Барнауле',
-			'phone'   => '8 800 100-12-12',
-			'tel'     => '+78001001212',
+			'phone'   => '8 800 101-38-12',
+			'tel'     => '+78001013812',
 			'address' => 'Барнаул, пр. Ленина, 24',
 			'extra'   => 'Отдельный вход со двора.',
 			'license' => 'ЛО-22-01-004118',
 			'map'     => '',
-			'tg'      => 'https://t.me/+78001001212',
+			'tg'      => 'https://t.me/+78001013812',
 			'max'     => 'https://max.ru/',
 			'default' => 0,
 		),
@@ -88,13 +88,13 @@ function alba_default_cities() {
 			'slug'    => 'kemerovo',
 			'name'    => 'Кемерово',
 			'prep'    => 'в Кемерове',
-			'phone'   => '8 800 100-12-12',
-			'tel'     => '+78001001212',
+			'phone'   => '8 800 101-38-12',
+			'tel'     => '+78001013812',
 			'address' => 'Кемерово, пр. Советский, 54',
 			'extra'   => 'Стационар 24/7, трансфер.',
 			'license' => 'ЛО-42-01-002671',
 			'map'     => '',
-			'tg'      => 'https://t.me/+78001001212',
+			'tg'      => 'https://t.me/+78001013812',
 			'max'     => 'https://max.ru/',
 			'default' => 0,
 		),
@@ -102,13 +102,13 @@ function alba_default_cities() {
 			'slug'    => 'nkz',
 			'name'    => 'Новокузнецк',
 			'prep'    => 'в Новокузнецке',
-			'phone'   => '8 800 100-12-12',
-			'tel'     => '+78001001212',
+			'phone'   => '8 800 101-38-12',
+			'tel'     => '+78001013812',
 			'address' => 'Новокузнецк, пр. Металлургов, 19',
 			'extra'   => 'Закрытая территория.',
 			'license' => 'ЛО-42-01-002688',
 			'map'     => '',
-			'tg'      => 'https://t.me/+78001001212',
+			'tg'      => 'https://t.me/+78001013812',
 			'max'     => 'https://max.ru/',
 			'default' => 0,
 		),
@@ -116,13 +116,13 @@ function alba_default_cities() {
 			'slug'    => 'krsk',
 			'name'    => 'Красноярск',
 			'prep'    => 'в Красноярске',
-			'phone'   => '8 800 100-12-12',
-			'tel'     => '+78001001212',
+			'phone'   => '8 800 101-38-12',
+			'tel'     => '+78001013812',
 			'address' => 'Красноярск, ул. Карла Маркса, 78',
 			'extra'   => 'Центр, анонимный въезд.',
 			'license' => 'ЛО-24-01-003901',
 			'map'     => '',
-			'tg'      => 'https://t.me/+78001001212',
+			'tg'      => 'https://t.me/+78001013812',
 			'max'     => 'https://max.ru/',
 			'default' => 0,
 		),
@@ -130,13 +130,13 @@ function alba_default_cities() {
 			'slug'    => 'surgut',
 			'name'    => 'Сургут',
 			'prep'    => 'в Сургуте',
-			'phone'   => '8 800 100-12-12',
-			'tel'     => '+78001001212',
+			'phone'   => '8 800 101-38-12',
+			'tel'     => '+78001013812',
 			'address' => 'Сургут, ул. Энтузиастов, 8',
 			'extra'   => 'Круглосуточный приём.',
 			'license' => 'ЛО-86-01-001744',
 			'map'     => '',
-			'tg'      => 'https://t.me/+78001001212',
+			'tg'      => 'https://t.me/+78001013812',
 			'max'     => 'https://max.ru/',
 			'default' => 0,
 		),
@@ -144,13 +144,13 @@ function alba_default_cities() {
 			'slug'    => 'moscow',
 			'name'    => 'Москва',
 			'prep'    => 'в Москве',
-			'phone'   => '8 800 100-12-12',
-			'tel'     => '+78001001212',
+			'phone'   => '8 800 101-38-12',
+			'tel'     => '+78001013812',
 			'address' => 'Москва, Пресненская наб., 10с2',
 			'extra'   => 'Внутренний двор, закрытая парковка.',
 			'license' => 'ЛО-77-01-021458',
 			'map'     => '',
-			'tg'      => 'https://t.me/+78001001212',
+			'tg'      => 'https://t.me/+78001013812',
 			'max'     => 'https://max.ru/',
 			'default' => 0,
 		),
@@ -158,18 +158,47 @@ function alba_default_cities() {
 			'slug'    => 'spb',
 			'name'    => 'Санкт-Петербург',
 			'prep'    => 'в Санкт-Петербурге',
-			'phone'   => '8 800 100-12-12',
-			'tel'     => '+78001001212',
+			'phone'   => '8 800 101-38-12',
+			'tel'     => '+78001013812',
 			'address' => 'Санкт-Петербург, Невский пр., 88',
 			'extra'   => 'Отдельный вход со двора.',
 			'license' => 'ЛО-78-01-011203',
 			'map'     => '',
-			'tg'      => 'https://t.me/+78001001212',
+			'tg'      => 'https://t.me/+78001013812',
 			'max'     => 'https://max.ru/',
 			'default' => 0,
 		),
 	);
 }
+
+/**
+ * One-shot: refresh phone/tel/tg in saved alba_cities after number change.
+ */
+function alba_maybe_migrate_phone() {
+	$flag = 'alba_phone_migrated_88001013812';
+	if ( get_option( $flag ) ) {
+		return;
+	}
+	$phone = '8 800 101-38-12';
+	$tel   = '+78001013812';
+	$tg    = 'https://t.me/+78001013812';
+	$saved = get_option( 'alba_cities', array() );
+	if ( is_array( $saved ) && $saved ) {
+		$changed = false;
+		foreach ( $saved as &$row ) {
+			$row['phone'] = $phone;
+			$row['tel']   = $tel;
+			$row['tg']    = $tg;
+			$changed      = true;
+		}
+		unset( $row );
+		if ( $changed ) {
+			update_option( 'alba_cities', $saved, false );
+		}
+	}
+	update_option( $flag, 1, false );
+}
+add_action( 'init', 'alba_maybe_migrate_phone', 1 );
 
 function alba_get_cities() {
 	$saved = get_option( 'alba_cities', array() );

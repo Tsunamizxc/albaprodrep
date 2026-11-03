@@ -4,17 +4,17 @@
   const KEY = "alba-city";
 
   const CITIES = [
-    { id: "omsk", name: "Омск", prep: "в Омске", phone: "8 800 100-12-12", tel: "+78001001212", address: "Омск, ул. Ленина, 12", extra: "Отдельный вход. Трансфер по городу и области.", license: "ЛО-55-01-002891", map: "https://yandex.ru/map-widget/v1/?ll=73.368227%2C54.989342&z=16&text=%D0%9E%D0%BC%D1%81%D0%BA%2C%20%D1%83%D0%BB.%20%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0%2C%2012" },
-    { id: "nsk", name: "Новосибирск", prep: "в Новосибирске", phone: "8 800 100-12-12", tel: "+78001001212", address: "Новосибирск, Красный проспект, 52", extra: "Отдельный вход, закрытая парковка.", license: "ЛО-54-01-005412", map: "https://yandex.ru/map-widget/v1/?ll=82.920430%2C55.030204&z=16&text=%D0%9D%D0%BE%D0%B2%D0%BE%D1%81%D0%B8%D0%B1%D0%B8%D1%80%D1%81%D0%BA%2C%20%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D1%8B%D0%B9%20%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82%2C%2052" },
-    { id: "tomsk", name: "Томск", prep: "в Томске", phone: "8 800 100-12-12", tel: "+78001001212", address: "Томск, пр. Ленина, 54", extra: "Тихий двор, трансфер по городу.", license: "ЛО-70-01-001904", map: "https://yandex.ru/map-widget/v1/?ll=84.948227%2C56.484640&z=16&text=%D0%A2%D0%BE%D0%BC%D1%81%D0%BA%2C%20%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82%20%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0%2C%2054" },
-    { id: "tyumen", name: "Тюмень", prep: "в Тюмени", phone: "8 800 100-12-12", tel: "+78001001212", address: "Тюмень, ул. Республики, 83", extra: "Центр, анонимный подъезд.", license: "ЛО-72-01-003215", map: "https://yandex.ru/map-widget/v1/?ll=65.534328%2C57.152974&z=16&text=%D0%A2%D1%8E%D0%BC%D0%B5%D0%BD%D1%8C%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B8%2C%2083" },
-    { id: "barnaul", name: "Барнаул", prep: "в Барнауле", phone: "8 800 100-12-12", tel: "+78001001212", address: "Барнаул, пр. Ленина, 24", extra: "Отдельный вход со двора.", license: "ЛО-22-01-004118", map: "https://yandex.ru/map-widget/v1/?ll=83.779861%2C53.347847&z=16&text=%D0%91%D0%B0%D1%80%D0%BD%D0%B0%D1%83%D0%BB%2C%20%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82%20%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0%2C%2024" },
-    { id: "kemerovo", name: "Кемерово", prep: "в Кемерове", phone: "8 800 100-12-12", tel: "+78001001212", address: "Кемерово, пр. Советский, 54", extra: "Стационар 24/7, трансфер.", license: "ЛО-42-01-002671", map: "https://yandex.ru/map-widget/v1/?ll=86.087314%2C55.354968&z=16&text=%D0%9A%D0%B5%D0%BC%D0%B5%D1%80%D0%BE%D0%B2%D0%BE%2C%20%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%B8%D0%B9%20%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82%2C%2054" },
-    { id: "nkz", name: "Новокузнецк", prep: "в Новокузнецке", phone: "8 800 100-12-12", tel: "+78001001212", address: "Новокузнецк, пр. Металлургов, 19", extra: "Закрытая территория.", license: "ЛО-42-01-002688", map: "https://yandex.ru/map-widget/v1/?ll=87.136047%2C53.757547&z=16&text=%D0%9D%D0%BE%D0%B2%D0%BE%D0%BA%D1%83%D0%B7%D0%BD%D0%B5%D1%86%D0%BA%2C%20%D0%9C%D0%B5%D1%82%D0%B0%D0%BB%D0%BB%D1%83%D1%80%D0%B3%D0%BE%D0%B2%2C%2019" },
-    { id: "krsk", name: "Красноярск", prep: "в Красноярске", phone: "8 800 100-12-12", tel: "+78001001212", address: "Красноярск, ул. Карла Маркса, 78", extra: "Центр, анонимный въезд.", license: "ЛО-24-01-003901", map: "https://yandex.ru/map-widget/v1/?ll=92.852576%2C56.010569&z=16&text=%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D1%8F%D1%80%D1%81%D0%BA%2C%20%D0%9A%D0%B0%D1%80%D0%BB%D0%B0%20%D0%9C%D0%B0%D1%80%D0%BA%D1%81%D0%B0%2C%2078" },
-    { id: "surgut", name: "Сургут", prep: "в Сургуте", phone: "8 800 100-12-12", tel: "+78001001212", address: "Сургут, ул. Энтузиастов, 8", extra: "Круглосуточный приём.", license: "ЛО-86-01-001744", map: "https://yandex.ru/map-widget/v1/?ll=73.396713%2C61.254035&z=16&text=%D0%A1%D1%83%D1%80%D0%B3%D1%83%D1%82%2C%20%D0%AD%D0%BD%D1%82%D1%83%D0%B7%D0%B8%D0%B0%D1%81%D1%82%D0%BE%D0%B2%2C%208" },
-    { id: "moscow", name: "Москва", prep: "в Москве", phone: "8 800 100-12-12", tel: "+78001001212", address: "Москва, Пресненская наб., 10с2", extra: "Внутренний двор, закрытая парковка.", license: "ЛО-77-01-021458", map: "https://yandex.ru/map-widget/v1/?ll=37.539139%2C55.747231&z=16&text=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D0%9F%D1%80%D0%B5%D1%81%D0%BD%D0%B5%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BD%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F%2C%2010" },
-    { id: "spb", name: "Санкт-Петербург", prep: "в Санкт-Петербурге", phone: "8 800 100-12-12", tel: "+78001001212", address: "Санкт-Петербург, Невский пр., 88", extra: "Отдельный вход со двора.", license: "ЛО-78-01-011203", map: "https://yandex.ru/map-widget/v1/?ll=30.360909%2C59.931058&z=16&text=%D0%A1%D0%B0%D0%BD%D0%BA%D1%82-%D0%9F%D0%B5%D1%82%D0%B5%D1%80%D0%B1%D1%83%D1%80%D0%B3%2C%20%D0%9D%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9%20%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82%2C%2088" }
+    { id: "omsk", name: "Омск", prep: "в Омске", phone: "8 800 101-38-12", tel: "+78001013812", address: "Омск, ул. Ленина, 12", extra: "Отдельный вход. Трансфер по городу и области.", license: "ЛО-55-01-002891", map: "https://yandex.ru/map-widget/v1/?ll=73.368227%2C54.989342&z=16&text=%D0%9E%D0%BC%D1%81%D0%BA%2C%20%D1%83%D0%BB.%20%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0%2C%2012" },
+    { id: "nsk", name: "Новосибирск", prep: "в Новосибирске", phone: "8 800 101-38-12", tel: "+78001013812", address: "Новосибирск, Красный проспект, 52", extra: "Отдельный вход, закрытая парковка.", license: "ЛО-54-01-005412", map: "https://yandex.ru/map-widget/v1/?ll=82.920430%2C55.030204&z=16&text=%D0%9D%D0%BE%D0%B2%D0%BE%D1%81%D0%B8%D0%B1%D0%B8%D1%80%D1%81%D0%BA%2C%20%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D1%8B%D0%B9%20%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82%2C%2052" },
+    { id: "tomsk", name: "Томск", prep: "в Томске", phone: "8 800 101-38-12", tel: "+78001013812", address: "Томск, пр. Ленина, 54", extra: "Тихий двор, трансфер по городу.", license: "ЛО-70-01-001904", map: "https://yandex.ru/map-widget/v1/?ll=84.948227%2C56.484640&z=16&text=%D0%A2%D0%BE%D0%BC%D1%81%D0%BA%2C%20%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82%20%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0%2C%2054" },
+    { id: "tyumen", name: "Тюмень", prep: "в Тюмени", phone: "8 800 101-38-12", tel: "+78001013812", address: "Тюмень, ул. Республики, 83", extra: "Центр, анонимный подъезд.", license: "ЛО-72-01-003215", map: "https://yandex.ru/map-widget/v1/?ll=65.534328%2C57.152974&z=16&text=%D0%A2%D1%8E%D0%BC%D0%B5%D0%BD%D1%8C%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B8%2C%2083" },
+    { id: "barnaul", name: "Барнаул", prep: "в Барнауле", phone: "8 800 101-38-12", tel: "+78001013812", address: "Барнаул, пр. Ленина, 24", extra: "Отдельный вход со двора.", license: "ЛО-22-01-004118", map: "https://yandex.ru/map-widget/v1/?ll=83.779861%2C53.347847&z=16&text=%D0%91%D0%B0%D1%80%D0%BD%D0%B0%D1%83%D0%BB%2C%20%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82%20%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0%2C%2024" },
+    { id: "kemerovo", name: "Кемерово", prep: "в Кемерове", phone: "8 800 101-38-12", tel: "+78001013812", address: "Кемерово, пр. Советский, 54", extra: "Стационар 24/7, трансфер.", license: "ЛО-42-01-002671", map: "https://yandex.ru/map-widget/v1/?ll=86.087314%2C55.354968&z=16&text=%D0%9A%D0%B5%D0%BC%D0%B5%D1%80%D0%BE%D0%B2%D0%BE%2C%20%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%B8%D0%B9%20%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82%2C%2054" },
+    { id: "nkz", name: "Новокузнецк", prep: "в Новокузнецке", phone: "8 800 101-38-12", tel: "+78001013812", address: "Новокузнецк, пр. Металлургов, 19", extra: "Закрытая территория.", license: "ЛО-42-01-002688", map: "https://yandex.ru/map-widget/v1/?ll=87.136047%2C53.757547&z=16&text=%D0%9D%D0%BE%D0%B2%D0%BE%D0%BA%D1%83%D0%B7%D0%BD%D0%B5%D1%86%D0%BA%2C%20%D0%9C%D0%B5%D1%82%D0%B0%D0%BB%D0%BB%D1%83%D1%80%D0%B3%D0%BE%D0%B2%2C%2019" },
+    { id: "krsk", name: "Красноярск", prep: "в Красноярске", phone: "8 800 101-38-12", tel: "+78001013812", address: "Красноярск, ул. Карла Маркса, 78", extra: "Центр, анонимный въезд.", license: "ЛО-24-01-003901", map: "https://yandex.ru/map-widget/v1/?ll=92.852576%2C56.010569&z=16&text=%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D1%8F%D1%80%D1%81%D0%BA%2C%20%D0%9A%D0%B0%D1%80%D0%BB%D0%B0%20%D0%9C%D0%B0%D1%80%D0%BA%D1%81%D0%B0%2C%2078" },
+    { id: "surgut", name: "Сургут", prep: "в Сургуте", phone: "8 800 101-38-12", tel: "+78001013812", address: "Сургут, ул. Энтузиастов, 8", extra: "Круглосуточный приём.", license: "ЛО-86-01-001744", map: "https://yandex.ru/map-widget/v1/?ll=73.396713%2C61.254035&z=16&text=%D0%A1%D1%83%D1%80%D0%B3%D1%83%D1%82%2C%20%D0%AD%D0%BD%D1%82%D1%83%D0%B7%D0%B8%D0%B0%D1%81%D1%82%D0%BE%D0%B2%2C%208" },
+    { id: "moscow", name: "Москва", prep: "в Москве", phone: "8 800 101-38-12", tel: "+78001013812", address: "Москва, Пресненская наб., 10с2", extra: "Внутренний двор, закрытая парковка.", license: "ЛО-77-01-021458", map: "https://yandex.ru/map-widget/v1/?ll=37.539139%2C55.747231&z=16&text=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D0%9F%D1%80%D0%B5%D1%81%D0%BD%D0%B5%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BD%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F%2C%2010" },
+    { id: "spb", name: "Санкт-Петербург", prep: "в Санкт-Петербурге", phone: "8 800 101-38-12", tel: "+78001013812", address: "Санкт-Петербург, Невский пр., 88", extra: "Отдельный вход со двора.", license: "ЛО-78-01-011203", map: "https://yandex.ru/map-widget/v1/?ll=30.360909%2C59.931058&z=16&text=%D0%A1%D0%B0%D0%BD%D0%BA%D1%82-%D0%9F%D0%B5%D1%82%D0%B5%D1%80%D0%B1%D1%83%D1%80%D0%B3%2C%20%D0%9D%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9%20%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82%2C%2088" }
   ];
 
   const byId = Object.fromEntries(CITIES.map((c) => [c.id, c]));
@@ -40,8 +40,8 @@
   const applyCity = (city) => {
     if (!city) return;
     try { localStorage.setItem(KEY, city.id || city.slug); } catch (e) {}
-    const tel = (city.tel || "+78001001212").replace(/\s+/g, "");
-    const phone = city.phone || "8 800 100-12-12";
+    const tel = (city.tel || "+78001013812").replace(/\s+/g, "");
+    const phone = city.phone || "8 800 101-38-12";
     doc.querySelectorAll("[data-city-name]").forEach((n) => { n.textContent = city.name; });
     doc.querySelectorAll("[data-city-prep]").forEach((n) => { n.textContent = city.prep; });
     doc.querySelectorAll("[data-city-phone]").forEach((n) => { n.textContent = phone; });
@@ -74,7 +74,7 @@
       if (!mnav.querySelector("[data-mnav-contact]")) {
         mnav.insertAdjacentHTML("afterbegin",
           '<div class="mnav-contact" data-mnav-contact>' +
-            '<a class="mnav-contact__phone" href="tel:+78001001212">8 800 100-12-12</a>' +
+            '<a class="mnav-contact__phone" href="tel:+78001013812">8 800 101-38-12</a>' +
             '<span class="mnav-contact__hint">Бесплатно по России</span>' +
             '<p class="mnav-contact__addr">Контакт-центр: ул. Ленина, 12</p>' +
           "</div>");
@@ -1343,9 +1343,9 @@
     bar.setAttribute("data-sticky-lead", "");
     bar.innerHTML =
       '<div class="sticky-lead__inner">' +
-        '<a class="sticky-lead__call" href="tel:+78001001212" data-city-tel>' +
+        '<a class="sticky-lead__call" href="tel:+78001013812" data-city-tel>' +
           '<span class="sticky-lead__label">Вызвать нарколога на дом</span>' +
-          '<strong class="sticky-lead__phone" data-city-phone>8 800 100-12-12</strong>' +
+          '<strong class="sticky-lead__phone" data-city-phone>8 800 101-38-12</strong>' +
         "</a>" +
         '<div class="sticky-lead__actions">' +
           '<a class="sticky-lead__btn sticky-lead__btn--max" href="https://max.ru/" data-city-max target="_blank" rel="noopener" aria-label="Max">' +
@@ -1353,10 +1353,10 @@
               ((typeof ALBA !== "undefined" && ALBA.home) ? String(ALBA.home).replace(/\/?$/, "/") : "/") +
               'images/Max_logo.svg" alt="" width="20" height="20" decoding="async"></span>' +
           "</a>" +
-          '<a class="sticky-lead__btn sticky-lead__btn--tg" href="https://t.me/+78001001212" data-city-tg target="_blank" rel="noopener" aria-label="Telegram">' +
+          '<a class="sticky-lead__btn sticky-lead__btn--tg" href="https://t.me/+78001013812" data-city-tg target="_blank" rel="noopener" aria-label="Telegram">' +
             '<span class="sticky-lead__ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="#2aabee" aria-hidden="true"><path d="M21.43 4.53 3.87 11.32c-1.2.47-1.19 1.13-.22 1.43l4.5 1.4 10.45-6.59c.5-.3.95-.13.58.18l-8.46 7.63-.33 4.72c.48 0 .69-.22.96-.48l2.3-2.24 4.78 3.53c.88.48 1.51.23 1.73-.81l3.13-14.74c.32-1.28-.49-1.86-1.36-1.42Z"/></svg></span>' +
           "</a>" +
-          '<a class="sticky-lead__btn sticky-lead__btn--phone" href="tel:+78001001212" data-city-tel aria-label="Позвонить">' +
+          '<a class="sticky-lead__btn sticky-lead__btn--phone" href="tel:+78001013812" data-city-tel aria-label="Позвонить">' +
             '<span class="sticky-lead__ico"><span class="icon-phone" aria-hidden="true"></span></span>' +
           "</a>" +
         "</div>" +
@@ -1417,7 +1417,7 @@
           "</div>" +
           '<div class="page-funnel__actions">' +
             '<a class="btn btn--blue" href="#" data-open-modal>' + (opts.cta || "Оставить заявку") + "</a>" +
-            '<a class="btn btn--line" href="tel:+78001001212" data-city-tel data-no-arr>Позвонить <span data-city-phone>8 800 100-12-12</span></a>' +
+            '<a class="btn btn--line" href="tel:+78001013812" data-city-tel data-no-arr>Позвонить <span data-city-phone>8 800 101-38-12</span></a>' +
           "</div>" +
         "</div>";
       return section;
@@ -1864,7 +1864,7 @@
             '<ul class="exit-modal__tags">' +
               "<li>Бесплатная консультация</li>" +
               "<li>24/7</li>" +
-              '<li><a href="tel:+78001001212" data-city-tel><span data-city-phone>8 800 100-12-12</span></a></li>' +
+              '<li><a href="tel:+78001013812" data-city-tel><span data-city-phone>8 800 101-38-12</span></a></li>' +
             "</ul>" +
             '<button class="exit-modal__close" type="button" data-exit-close aria-label="Закрыть">×</button>' +
           "</div>" +
@@ -1875,7 +1875,7 @@
               '<p class="exit-modal__title">Подскажем, какой формат помощи вам подойдёт</p>' +
               '<p class="exit-modal__subtitle">Можно уточнить выезд врача на дом, стоимость, условия стационара или порядок обращения. 18+, добровольно.</p>' +
               '<div class="exit-modal__btns">' +
-                '<a class="btn btn--blue" href="tel:+78001001212" data-city-tel>Вызвать врача</a>' +
+                '<a class="btn btn--blue" href="tel:+78001013812" data-city-tel>Вызвать врача</a>' +
                 '<a class="btn btn--line" href="index.html#calc">Калькулятор</a>' +
               "</div>" +
             "</div>" +
@@ -1898,7 +1898,7 @@
             '<div class="exit-modal__networks">' +
               '<p class="exit-modal__networks-text">Или напишите без звонка:</p>' +
               '<div class="exit-modal__networks-wrap">' +
-                '<a class="exit-modal__networks-item" href="https://t.me/+78001001212" data-city-tg target="_blank" rel="noopener">Telegram</a>' +
+                '<a class="exit-modal__networks-item" href="https://t.me/+78001013812" data-city-tg target="_blank" rel="noopener">Telegram</a>' +
                 '<a class="exit-modal__networks-item" href="https://max.ru/" data-city-max target="_blank" rel="noopener">Max</a>' +
               "</div>" +
             "</div>" +

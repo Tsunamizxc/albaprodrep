@@ -27,7 +27,7 @@ $l = trim( (string) ( $b['lead'] ?? '' ) );
               <span>от 6 900 ₽ / сутки</span>
               <div class="rooms__actions">
                 <a class="btn btn--blue" href="#" data-open-modal>Записаться</a>
-                <a class="btn btn--line" href="tel:+78001001212" data-city-tel>Позвонить</a>
+                <a class="btn btn--line" href="tel:+78001013812" data-city-tel>Позвонить</a>
               </div>
             </div>
           </article>
@@ -39,7 +39,7 @@ $l = trim( (string) ( $b['lead'] ?? '' ) );
               <span>от 14 900 ₽ / сутки</span>
               <div class="rooms__actions">
                 <a class="btn btn--blue" href="#" data-open-modal>Записаться</a>
-                <a class="btn btn--line" href="tel:+78001001212" data-city-tel>Позвонить</a>
+                <a class="btn btn--line" href="tel:+78001013812" data-city-tel>Позвонить</a>
               </div>
             </div>
           </article>
@@ -51,7 +51,7 @@ $l = trim( (string) ( $b['lead'] ?? '' ) );
               <span>от 8 900 ₽ / сутки</span>
               <div class="rooms__actions">
                 <a class="btn btn--blue" href="#" data-open-modal>Записаться</a>
-                <a class="btn btn--line" href="tel:+78001001212" data-city-tel>Позвонить</a>
+                <a class="btn btn--line" href="tel:+78001013812" data-city-tel>Позвонить</a>
               </div>
             </div>
           </article>
@@ -63,7 +63,7 @@ $l = trim( (string) ( $b['lead'] ?? '' ) );
               <span>от 11 500 ₽ / сутки</span>
               <div class="rooms__actions">
                 <a class="btn btn--blue" href="#" data-open-modal>Записаться</a>
-                <a class="btn btn--line" href="tel:+78001001212" data-city-tel>Позвонить</a>
+                <a class="btn btn--line" href="tel:+78001013812" data-city-tel>Позвонить</a>
               </div>
             </div>
           </article>
